@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package serviciosStreaming;
+option go_package = "/serviciosStreaming";
+
+service AudioService {
+  rpc enviarCancionMedianteStream(peticionStreamingDTO) returns (stream fragmentoCancion);
+	rpc enviarMetadatos(peticionMetadatosDTO) returns (Metadatos);
+}
+
+message peticionStreamingDTO {
+  string titulo = 1; 
+  string formato = 2;
+}
+
+message peticionMetadatosDTO {
+  string titulo = 1; 
+}
+
+message Metadatos {
+	int32 id = 1;
+  string titulo = 2;
+  string artista = 3;
+	int32 año = 4;
+	string duracion = 5;
+	Genero genero = 6;
+}
+
+message Genero {
+  int32 id = 1;
+  string nombre = 2;
+}
+
+message fragmentoCancion {
+  bytes data = 1;
+}
