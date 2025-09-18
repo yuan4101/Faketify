@@ -25,7 +25,7 @@ func cleanSongTitle(title string) string {
 	return re.ReplaceAllString(cleaned, "")
 }
 
-func LoadSongsMetadata(songsArr *[]model.Song) {
+func LoadSongsMetadata(songsArr *[]model.Song, genresArr *[]model.Genre) {
 	// Genres
 	genresObjArr := []model.Genre{
 		{ID: 0, NAME: "Rock"},
@@ -47,6 +47,7 @@ func LoadSongsMetadata(songsArr *[]model.Song) {
 	}
 
 	*songsArr = append(*songsArr, songsObjArr...)
+	*genresArr = append(*genresArr, genresObjArr...)
 }
 
 func GetSong(prmTitle string, songsArr []model.Song) model.ResponseSongDTO {
@@ -66,5 +67,20 @@ func GetSong(prmTitle string, songsArr []model.Song) model.ResponseSongDTO {
 	}
 	response.CODE = 404
 	response.MESSAGE = "Song not found"
+	return response
+}
+
+func GetGenres(genresArr []model.Genre) model.ResponseAllGenresDTO {
+	var response model.ResponseAllGenresDTO
+
+	if len(genresArr) > 0 {
+		response.GENRES_ARR = genresArr
+		response.CODE = 200
+		response.MESSAGE = "Genres found"
+		return response
+	}
+
+	response.CODE = 404
+	response.MESSAGE = "Genres not found"
 	return response
 }
