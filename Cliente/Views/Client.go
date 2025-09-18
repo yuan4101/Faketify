@@ -21,14 +21,15 @@ func main() {
 	defer conn.Close()
 
 	c := songServices.NewSongServiceClient(conn)
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
-	defer cancel()
 
 	//Se captura el título de la canción a buscar
 	fmt.Printf("\nSong title: ")
 	reader := bufio.NewReader(os.Stdin)
 	readedTitle, _ := reader.ReadString('\n')
 	readedTitle = strings.TrimSpace(readedTitle)
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	defer cancel()
 
 	//Se crea un objeto de tipo DTO que contiene el título de la canción a buscar
 	songRequestObj := &songServices.SongRequest{Title: readedTitle}
@@ -49,7 +50,7 @@ func main() {
 		fmt.Printf("Title: %s\n", res.SongObj.Title)
 		fmt.Printf("Artist: %s\n", res.SongObj.Artist)
 		fmt.Printf("Year: %d\n", res.SongObj.Year)
-		fmt.Printf("Duration: %s seconds\n", res.SongObj.Duration)
+		fmt.Printf("Duration: %s minutes\n", res.SongObj.Duration)
 		fmt.Printf("Genre: %s\n\n", res.SongObj.Genre.Name)
 	}
 }

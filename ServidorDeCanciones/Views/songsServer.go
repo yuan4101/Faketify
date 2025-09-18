@@ -10,6 +10,7 @@ import (
 	"localServer/grpc-songsServer/songServices"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/peer"
 )
 
 var songsArr []models.Song
@@ -20,13 +21,15 @@ type songsServer struct {
 
 func (s *songsServer) GetSong(ctx context.Context, req *songServices.SongRequest) (*songServices.ResponseSongDTO, error) {
 	title := req.GetTitle()
-	log.Printf("Client ask title: %s", title)
+
 	resp := services.GetSong(title, songsArr)
 
 	var response songServices.ResponseSongDTO
 	response.Code = resp.CODE
 	response.Message = resp.MESSAGE
-	log.Printf("> %d | %s", response.Code, response.Message)
+	if p, ok := peer.FromContext(ctx); ok {
+		log.Printf("-> Client(%s) | GET: %s | %d | %s", p.Addr.String(), title, response.Code, response.Message)
+	}
 
 	if resp.CODE == 200 {
 		response.SongObj = new(songServices.Song)
