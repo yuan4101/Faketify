@@ -14,6 +14,7 @@ import (
 )
 
 var songsArr []models.Song
+var genresArr []models.Genre
 
 type songsServer struct {
 	songServices.UnimplementedSongServiceServer
@@ -47,6 +48,29 @@ func (s *songsServer) GetSong(ctx context.Context, req *songServices.SongRequest
 	return &response, nil
 }
 
+func (s *songsServer) GetGenres(ctx context.Context, req *songServices.Empty) (*songServices.ResponseGenresDTO, error) {
+	resp := services.GetGenres(genresArr)
+
+	var response songServices.ResponseGenresDTO
+	response.Code = resp.CODE
+	response.Message = resp.MESSAGE
+	if p, ok := peer.FromContext(ctx); ok {
+		log.Printf("-> Client(%s) | GET: Genres | %d | %s", p.Addr.String(), response.Code, response.Message)
+	}
+
+	if resp.CODE == 200 {
+		for _, genre := range genresArr {
+			protoGenre := &songServices.Genre{
+				Id:   genre.ID,
+				Name: genre.NAME,
+			}
+			response.GenresObjArr = append(response.GenresObjArr, protoGenre)
+		}
+	}
+
+	return &response, nil
+}
+
 func main() {
 	listener, err := net.Listen("tcp", ":50053")
 	if err != nil {
@@ -60,7 +84,7 @@ func main() {
 	songServices.RegisterSongServiceServer(grpcServer, &songsServer{})
 
 	// Cargar metadatos de canciones
-	services.LoadSongsMetadata(&songsArr)
+	services.LoadSongsMetadata(&songsArr, &genresArr)
 
 	// Iniciar el servidor
 	log.Println("Songs gRPC server listening on port 50053")
