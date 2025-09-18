@@ -4,33 +4,35 @@ package serviciosStreaming;
 option go_package = "/serviciosStreaming";
 
 service AudioService {
-  rpc enviarCancionMedianteStream(peticionStreamingDTO) returns (stream fragmentoCancion);
-	rpc enviarMetadatos(peticionMetadatosDTO) returns (Metadatos);
+  rpc GetStreamingSong(SongRequest) returns (stream SongPacket);
+	rpc GetMetadata(MetadataRequest) returns (Metadata);
 }
 
-message peticionStreamingDTO {
-  string titulo = 1; 
-  string formato = 2;
+message Empty {}
+
+message SongRequest {
+  string title = 1; 
+  string format = 2;
 }
 
-message peticionMetadatosDTO {
-  string titulo = 1; 
+message MetadataRequest {
+  string title = 1; 
 }
 
-message Metadatos {
-	int32 id = 1;
-  string titulo = 2;
-  string artista = 3;
-	int32 año = 4;
-	string duracion = 5;
-	Genero genero = 6;
-}
-
-message Genero {
+message Genre {
   int32 id = 1;
-  string nombre = 2;
+  string name = 2;
 }
 
-message fragmentoCancion {
+message Metadata {
+	int32 id = 1;
+  string title = 2;
+  string artist = 3;
+	int32 year = 4;
+	string duration = 5;
+	Genre genre = 6;
+}
+
+message SongPacket {
   bytes data = 1;
 }
