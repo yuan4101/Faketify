@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.21.12
-// source: serviciosStreaming.proto
+// source: streamingServices.proto
 
-package serviciosStreaming
+package streamingServices
 
 import (
 	context "context"
@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AudioService_GetStreamingSong_FullMethodName = "/serviciosStreaming.AudioService/GetStreamingSong"
-	AudioService_GetMetadata_FullMethodName      = "/serviciosStreaming.AudioService/GetMetadata"
+	AudioService_GetStreamingSong_FullMethodName = "/streamingServices.AudioService/GetStreamingSong"
+	AudioService_GetMetadata_FullMethodName      = "/streamingServices.AudioService/GetMetadata"
 )
 
 // AudioServiceClient is the client API for AudioService service.
@@ -144,7 +144,7 @@ func _AudioService_GetMetadata_Handler(srv interface{}, ctx context.Context, dec
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AudioService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "serviciosStreaming.AudioService",
+	ServiceName: "streamingServices.AudioService",
 	HandlerType: (*AudioServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -159,5 +159,5 @@ var AudioService_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "serviciosStreaming.proto",
+	Metadata: "streamingServices.proto",
 }

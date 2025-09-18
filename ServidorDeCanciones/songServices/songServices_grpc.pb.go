@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.21.12
-// source: serviciosCancion.proto
+// source: songServices.proto
 
-package serviciosCancion
+package songServices
 
 import (
 	context "context"
@@ -19,18 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SongService_GetGenres_FullMethodName       = "/serviciosCancion.SongService/GetGenres"
-	SongService_GetSongsByGenre_FullMethodName = "/serviciosCancion.SongService/GetSongsByGenre"
-	SongService_GetSong_FullMethodName         = "/serviciosCancion.SongService/GetSong"
+	SongService_GetGenres_FullMethodName       = "/songServices.SongService/GetGenres"
+	SongService_GetSongsByGenre_FullMethodName = "/songServices.SongService/GetSongsByGenre"
+	SongService_GetSong_FullMethodName         = "/songServices.SongService/GetSong"
 )
 
 // SongServiceClient is the client API for SongService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SongServiceClient interface {
-	GetGenres(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GenreList, error)
-	GetSongsByGenre(ctx context.Context, in *SongsByGenreRequest, opts ...grpc.CallOption) (*SongList, error)
-	GetSong(ctx context.Context, in *SongRequest, opts ...grpc.CallOption) (*Song, error)
+	GetGenres(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ResponseGenresDTO, error)
+	GetSongsByGenre(ctx context.Context, in *SongsByGenreRequest, opts ...grpc.CallOption) (*ResponseSongsDTO, error)
+	GetSong(ctx context.Context, in *SongRequest, opts ...grpc.CallOption) (*ResponseSongDTO, error)
 }
 
 type songServiceClient struct {
@@ -41,9 +41,9 @@ func NewSongServiceClient(cc grpc.ClientConnInterface) SongServiceClient {
 	return &songServiceClient{cc}
 }
 
-func (c *songServiceClient) GetGenres(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GenreList, error) {
+func (c *songServiceClient) GetGenres(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ResponseGenresDTO, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GenreList)
+	out := new(ResponseGenresDTO)
 	err := c.cc.Invoke(ctx, SongService_GetGenres_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -51,9 +51,9 @@ func (c *songServiceClient) GetGenres(ctx context.Context, in *Empty, opts ...gr
 	return out, nil
 }
 
-func (c *songServiceClient) GetSongsByGenre(ctx context.Context, in *SongsByGenreRequest, opts ...grpc.CallOption) (*SongList, error) {
+func (c *songServiceClient) GetSongsByGenre(ctx context.Context, in *SongsByGenreRequest, opts ...grpc.CallOption) (*ResponseSongsDTO, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SongList)
+	out := new(ResponseSongsDTO)
 	err := c.cc.Invoke(ctx, SongService_GetSongsByGenre_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -61,9 +61,9 @@ func (c *songServiceClient) GetSongsByGenre(ctx context.Context, in *SongsByGenr
 	return out, nil
 }
 
-func (c *songServiceClient) GetSong(ctx context.Context, in *SongRequest, opts ...grpc.CallOption) (*Song, error) {
+func (c *songServiceClient) GetSong(ctx context.Context, in *SongRequest, opts ...grpc.CallOption) (*ResponseSongDTO, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Song)
+	out := new(ResponseSongDTO)
 	err := c.cc.Invoke(ctx, SongService_GetSong_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -75,9 +75,9 @@ func (c *songServiceClient) GetSong(ctx context.Context, in *SongRequest, opts .
 // All implementations must embed UnimplementedSongServiceServer
 // for forward compatibility.
 type SongServiceServer interface {
-	GetGenres(context.Context, *Empty) (*GenreList, error)
-	GetSongsByGenre(context.Context, *SongsByGenreRequest) (*SongList, error)
-	GetSong(context.Context, *SongRequest) (*Song, error)
+	GetGenres(context.Context, *Empty) (*ResponseGenresDTO, error)
+	GetSongsByGenre(context.Context, *SongsByGenreRequest) (*ResponseSongsDTO, error)
+	GetSong(context.Context, *SongRequest) (*ResponseSongDTO, error)
 	mustEmbedUnimplementedSongServiceServer()
 }
 
@@ -88,13 +88,13 @@ type SongServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedSongServiceServer struct{}
 
-func (UnimplementedSongServiceServer) GetGenres(context.Context, *Empty) (*GenreList, error) {
+func (UnimplementedSongServiceServer) GetGenres(context.Context, *Empty) (*ResponseGenresDTO, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGenres not implemented")
 }
-func (UnimplementedSongServiceServer) GetSongsByGenre(context.Context, *SongsByGenreRequest) (*SongList, error) {
+func (UnimplementedSongServiceServer) GetSongsByGenre(context.Context, *SongsByGenreRequest) (*ResponseSongsDTO, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSongsByGenre not implemented")
 }
-func (UnimplementedSongServiceServer) GetSong(context.Context, *SongRequest) (*Song, error) {
+func (UnimplementedSongServiceServer) GetSong(context.Context, *SongRequest) (*ResponseSongDTO, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSong not implemented")
 }
 func (UnimplementedSongServiceServer) mustEmbedUnimplementedSongServiceServer() {}
@@ -176,7 +176,7 @@ func _SongService_GetSong_Handler(srv interface{}, ctx context.Context, dec func
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var SongService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "serviciosCancion.SongService",
+	ServiceName: "songServices.SongService",
 	HandlerType: (*SongServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -193,5 +193,5 @@ var SongService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "serviciosCancion.proto",
+	Metadata: "songServices.proto",
 }

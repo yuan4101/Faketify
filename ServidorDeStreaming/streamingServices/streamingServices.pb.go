@@ -2,9 +2,9 @@
 // versions:
 // 	protoc-gen-go v1.36.8
 // 	protoc        v3.21.12
-// source: serviciosStreaming.proto
+// source: streamingServices.proto
 
-package serviciosStreaming
+package streamingServices
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -29,7 +29,7 @@ type Empty struct {
 
 func (x *Empty) Reset() {
 	*x = Empty{}
-	mi := &file_serviciosStreaming_proto_msgTypes[0]
+	mi := &file_streamingServices_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -41,7 +41,7 @@ func (x *Empty) String() string {
 func (*Empty) ProtoMessage() {}
 
 func (x *Empty) ProtoReflect() protoreflect.Message {
-	mi := &file_serviciosStreaming_proto_msgTypes[0]
+	mi := &file_streamingServices_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -54,7 +54,7 @@ func (x *Empty) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Empty.ProtoReflect.Descriptor instead.
 func (*Empty) Descriptor() ([]byte, []int) {
-	return file_serviciosStreaming_proto_rawDescGZIP(), []int{0}
+	return file_streamingServices_proto_rawDescGZIP(), []int{0}
 }
 
 type SongRequest struct {
@@ -67,7 +67,7 @@ type SongRequest struct {
 
 func (x *SongRequest) Reset() {
 	*x = SongRequest{}
-	mi := &file_serviciosStreaming_proto_msgTypes[1]
+	mi := &file_streamingServices_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -79,7 +79,7 @@ func (x *SongRequest) String() string {
 func (*SongRequest) ProtoMessage() {}
 
 func (x *SongRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_serviciosStreaming_proto_msgTypes[1]
+	mi := &file_streamingServices_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -92,7 +92,7 @@ func (x *SongRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SongRequest.ProtoReflect.Descriptor instead.
 func (*SongRequest) Descriptor() ([]byte, []int) {
-	return file_serviciosStreaming_proto_rawDescGZIP(), []int{1}
+	return file_streamingServices_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *SongRequest) GetTitle() string {
@@ -118,7 +118,7 @@ type MetadataRequest struct {
 
 func (x *MetadataRequest) Reset() {
 	*x = MetadataRequest{}
-	mi := &file_serviciosStreaming_proto_msgTypes[2]
+	mi := &file_streamingServices_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -130,7 +130,7 @@ func (x *MetadataRequest) String() string {
 func (*MetadataRequest) ProtoMessage() {}
 
 func (x *MetadataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_serviciosStreaming_proto_msgTypes[2]
+	mi := &file_streamingServices_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -143,7 +143,7 @@ func (x *MetadataRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MetadataRequest.ProtoReflect.Descriptor instead.
 func (*MetadataRequest) Descriptor() ([]byte, []int) {
-	return file_serviciosStreaming_proto_rawDescGZIP(), []int{2}
+	return file_streamingServices_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *MetadataRequest) GetTitle() string {
@@ -163,7 +163,7 @@ type Genre struct {
 
 func (x *Genre) Reset() {
 	*x = Genre{}
-	mi := &file_serviciosStreaming_proto_msgTypes[3]
+	mi := &file_streamingServices_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -175,7 +175,7 @@ func (x *Genre) String() string {
 func (*Genre) ProtoMessage() {}
 
 func (x *Genre) ProtoReflect() protoreflect.Message {
-	mi := &file_serviciosStreaming_proto_msgTypes[3]
+	mi := &file_streamingServices_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -188,7 +188,7 @@ func (x *Genre) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Genre.ProtoReflect.Descriptor instead.
 func (*Genre) Descriptor() ([]byte, []int) {
-	return file_serviciosStreaming_proto_rawDescGZIP(), []int{3}
+	return file_streamingServices_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *Genre) GetId() int32 {
@@ -219,7 +219,7 @@ type Metadata struct {
 
 func (x *Metadata) Reset() {
 	*x = Metadata{}
-	mi := &file_serviciosStreaming_proto_msgTypes[4]
+	mi := &file_streamingServices_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -231,7 +231,7 @@ func (x *Metadata) String() string {
 func (*Metadata) ProtoMessage() {}
 
 func (x *Metadata) ProtoReflect() protoreflect.Message {
-	mi := &file_serviciosStreaming_proto_msgTypes[4]
+	mi := &file_streamingServices_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -244,7 +244,7 @@ func (x *Metadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Metadata.ProtoReflect.Descriptor instead.
 func (*Metadata) Descriptor() ([]byte, []int) {
-	return file_serviciosStreaming_proto_rawDescGZIP(), []int{4}
+	return file_streamingServices_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *Metadata) GetId() int32 {
@@ -298,7 +298,7 @@ type SongPacket struct {
 
 func (x *SongPacket) Reset() {
 	*x = SongPacket{}
-	mi := &file_serviciosStreaming_proto_msgTypes[5]
+	mi := &file_streamingServices_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -310,7 +310,7 @@ func (x *SongPacket) String() string {
 func (*SongPacket) ProtoMessage() {}
 
 func (x *SongPacket) ProtoReflect() protoreflect.Message {
-	mi := &file_serviciosStreaming_proto_msgTypes[5]
+	mi := &file_streamingServices_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -323,7 +323,7 @@ func (x *SongPacket) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SongPacket.ProtoReflect.Descriptor instead.
 func (*SongPacket) Descriptor() ([]byte, []int) {
-	return file_serviciosStreaming_proto_rawDescGZIP(), []int{5}
+	return file_streamingServices_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *SongPacket) GetData() []byte {
@@ -333,11 +333,11 @@ func (x *SongPacket) GetData() []byte {
 	return nil
 }
 
-var File_serviciosStreaming_proto protoreflect.FileDescriptor
+var File_streamingServices_proto protoreflect.FileDescriptor
 
-const file_serviciosStreaming_proto_rawDesc = "" +
+const file_streamingServices_proto_rawDesc = "" +
 	"\n" +
-	"\x18serviciosStreaming.proto\x12\x12serviciosStreaming\"\a\n" +
+	"\x17streamingServices.proto\x12\x11streamingServices\"\a\n" +
 	"\x05Empty\";\n" +
 	"\vSongRequest\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12\x16\n" +
@@ -346,48 +346,48 @@ const file_serviciosStreaming_proto_rawDesc = "" +
 	"\x05title\x18\x01 \x01(\tR\x05title\"+\n" +
 	"\x05Genre\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"\xa9\x01\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"\xa8\x01\n" +
 	"\bMetadata\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x16\n" +
 	"\x06artist\x18\x03 \x01(\tR\x06artist\x12\x12\n" +
 	"\x04year\x18\x04 \x01(\x05R\x04year\x12\x1a\n" +
-	"\bduration\x18\x05 \x01(\tR\bduration\x12/\n" +
-	"\x05genre\x18\x06 \x01(\v2\x19.serviciosStreaming.GenreR\x05genre\" \n" +
+	"\bduration\x18\x05 \x01(\tR\bduration\x12.\n" +
+	"\x05genre\x18\x06 \x01(\v2\x18.streamingServices.GenreR\x05genre\" \n" +
 	"\n" +
 	"SongPacket\x12\x12\n" +
-	"\x04data\x18\x01 \x01(\fR\x04data2\xb7\x01\n" +
-	"\fAudioService\x12U\n" +
-	"\x10GetStreamingSong\x12\x1f.serviciosStreaming.SongRequest\x1a\x1e.serviciosStreaming.SongPacket0\x01\x12P\n" +
-	"\vGetMetadata\x12#.serviciosStreaming.MetadataRequest\x1a\x1c.serviciosStreaming.MetadataB\x15Z\x13/serviciosStreamingb\x06proto3"
+	"\x04data\x18\x01 \x01(\fR\x04data2\xb3\x01\n" +
+	"\fAudioService\x12S\n" +
+	"\x10GetStreamingSong\x12\x1e.streamingServices.SongRequest\x1a\x1d.streamingServices.SongPacket0\x01\x12N\n" +
+	"\vGetMetadata\x12\".streamingServices.MetadataRequest\x1a\x1b.streamingServices.MetadataB\x14Z\x12/streamingServicesb\x06proto3"
 
 var (
-	file_serviciosStreaming_proto_rawDescOnce sync.Once
-	file_serviciosStreaming_proto_rawDescData []byte
+	file_streamingServices_proto_rawDescOnce sync.Once
+	file_streamingServices_proto_rawDescData []byte
 )
 
-func file_serviciosStreaming_proto_rawDescGZIP() []byte {
-	file_serviciosStreaming_proto_rawDescOnce.Do(func() {
-		file_serviciosStreaming_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_serviciosStreaming_proto_rawDesc), len(file_serviciosStreaming_proto_rawDesc)))
+func file_streamingServices_proto_rawDescGZIP() []byte {
+	file_streamingServices_proto_rawDescOnce.Do(func() {
+		file_streamingServices_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_streamingServices_proto_rawDesc), len(file_streamingServices_proto_rawDesc)))
 	})
-	return file_serviciosStreaming_proto_rawDescData
+	return file_streamingServices_proto_rawDescData
 }
 
-var file_serviciosStreaming_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_serviciosStreaming_proto_goTypes = []any{
-	(*Empty)(nil),           // 0: serviciosStreaming.Empty
-	(*SongRequest)(nil),     // 1: serviciosStreaming.SongRequest
-	(*MetadataRequest)(nil), // 2: serviciosStreaming.MetadataRequest
-	(*Genre)(nil),           // 3: serviciosStreaming.Genre
-	(*Metadata)(nil),        // 4: serviciosStreaming.Metadata
-	(*SongPacket)(nil),      // 5: serviciosStreaming.SongPacket
+var file_streamingServices_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_streamingServices_proto_goTypes = []any{
+	(*Empty)(nil),           // 0: streamingServices.Empty
+	(*SongRequest)(nil),     // 1: streamingServices.SongRequest
+	(*MetadataRequest)(nil), // 2: streamingServices.MetadataRequest
+	(*Genre)(nil),           // 3: streamingServices.Genre
+	(*Metadata)(nil),        // 4: streamingServices.Metadata
+	(*SongPacket)(nil),      // 5: streamingServices.SongPacket
 }
-var file_serviciosStreaming_proto_depIdxs = []int32{
-	3, // 0: serviciosStreaming.Metadata.genre:type_name -> serviciosStreaming.Genre
-	1, // 1: serviciosStreaming.AudioService.GetStreamingSong:input_type -> serviciosStreaming.SongRequest
-	2, // 2: serviciosStreaming.AudioService.GetMetadata:input_type -> serviciosStreaming.MetadataRequest
-	5, // 3: serviciosStreaming.AudioService.GetStreamingSong:output_type -> serviciosStreaming.SongPacket
-	4, // 4: serviciosStreaming.AudioService.GetMetadata:output_type -> serviciosStreaming.Metadata
+var file_streamingServices_proto_depIdxs = []int32{
+	3, // 0: streamingServices.Metadata.genre:type_name -> streamingServices.Genre
+	1, // 1: streamingServices.AudioService.GetStreamingSong:input_type -> streamingServices.SongRequest
+	2, // 2: streamingServices.AudioService.GetMetadata:input_type -> streamingServices.MetadataRequest
+	5, // 3: streamingServices.AudioService.GetStreamingSong:output_type -> streamingServices.SongPacket
+	4, // 4: streamingServices.AudioService.GetMetadata:output_type -> streamingServices.Metadata
 	3, // [3:5] is the sub-list for method output_type
 	1, // [1:3] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -395,26 +395,26 @@ var file_serviciosStreaming_proto_depIdxs = []int32{
 	0, // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_serviciosStreaming_proto_init() }
-func file_serviciosStreaming_proto_init() {
-	if File_serviciosStreaming_proto != nil {
+func init() { file_streamingServices_proto_init() }
+func file_streamingServices_proto_init() {
+	if File_streamingServices_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_serviciosStreaming_proto_rawDesc), len(file_serviciosStreaming_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_streamingServices_proto_rawDesc), len(file_streamingServices_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_serviciosStreaming_proto_goTypes,
-		DependencyIndexes: file_serviciosStreaming_proto_depIdxs,
-		MessageInfos:      file_serviciosStreaming_proto_msgTypes,
+		GoTypes:           file_streamingServices_proto_goTypes,
+		DependencyIndexes: file_streamingServices_proto_depIdxs,
+		MessageInfos:      file_streamingServices_proto_msgTypes,
 	}.Build()
-	File_serviciosStreaming_proto = out.File
-	file_serviciosStreaming_proto_goTypes = nil
-	file_serviciosStreaming_proto_depIdxs = nil
+	File_streamingServices_proto = out.File
+	file_streamingServices_proto_goTypes = nil
+	file_streamingServices_proto_depIdxs = nil
 }

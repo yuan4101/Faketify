@@ -1,11 +1,20 @@
-module cliente.local/grpc-cliente
+module localClient/grpc-client
 
 go 1.24.5
 
-// Servidor de canciones
-require servidor.local/grpc-servidorCanciones v0.0.0
-replace servidor.local/grpc-servidorCanciones => ../servidorDeCanciones
+require (
+	google.golang.org/grpc v1.75.1
+	localServer/grpc-songServer v0.0.0
+)
 
-// Servidor de streaming
-require servidor.local/grpc-servidorStreaming v0.0.0
-replace servidor.local/grpc-servidorStreaming => ../servidorDeStreaming
+require (
+	golang.org/x/net v0.41.0 // indirect
+	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/text v0.26.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250707201910-8d1bb00bc6a7 // indirect
+	google.golang.org/protobuf v1.36.9 // indirect
+)
+
+replace localServer/grpc-songServer => ../ServidorDeCanciones
+
+replace localServer/grpc-streamingServer => ../ServidorDeStreaming

@@ -1,4 +1,4 @@
-module servidor.local/grpc-servidorStreaming
+module localServer/grpc-streamingServer
 
 go 1.24.5
 

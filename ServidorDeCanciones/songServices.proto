@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package songServices;
+option go_package = "/songServices";
+
+service SongService {
+  rpc GetGenres(Empty) returns (ResponseGenresDTO);
+  rpc GetSongsByGenre(SongsByGenreRequest) returns (ResponseSongsDTO);
+  rpc GetSong(SongRequest) returns (ResponseSongDTO);
+}
+
+message Empty {}
+
+message SongsByGenreRequest {
+  string genreName = 1;
+}
+
+message SongRequest {
+  string title = 1;
+}
+
+message Genre {
+	int32 id = 1;
+	string name = 2;
+}
+
+message Song {
+	int32 id = 1;
+  string title = 2;
+  string artist = 3;
+	int32 year = 4;
+	string duration = 5;
+	Genre genre = 6;
+}
+
+message ResponseSongDTO {
+  Song songObj = 1;
+  int32 code = 2;
+  string message = 3;
+}
+
+message ResponseSongsDTO {
+  repeated Song songsObjArr = 1;
+  int32 code = 2;
+  string message = 3;
+}
+
+message ResponseGenresDTO {
+  repeated Genre genresObjArr = 1;
+  int32 code = 2;
+  string message = 3;
+}
