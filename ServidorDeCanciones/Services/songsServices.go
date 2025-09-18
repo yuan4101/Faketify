@@ -2,8 +2,28 @@ package services
 
 import (
 	model "localServer/grpc-songsServer/Models"
+	"regexp"
 	"strings"
 )
+
+func cleanSongTitle(title string) string {
+	cleaned := strings.ToLower(strings.TrimSpace(title))
+
+	// Convierte acentos a letras normales
+	replacer := strings.NewReplacer(
+		"á", "a", "à", "a", "â", "a", "ä", "a", "ã", "a",
+		"é", "e", "è", "e", "ê", "e", "ë", "e",
+		"í", "i", "ì", "i", "î", "i", "ï", "i",
+		"ó", "o", "ò", "o", "ô", "o", "ö", "o", "õ", "o",
+		"ú", "u", "ù", "u", "û", "u", "ü", "u",
+		"ñ", "n", "ç", "c",
+	)
+	cleaned = replacer.Replace(cleaned)
+
+	// Ahora limpia manteniendo solo a-z, 0-9 y &
+	re := regexp.MustCompile(`[^a-z0-9&]+`)
+	return re.ReplaceAllString(cleaned, "")
+}
 
 func LoadSongsMetadata(songsArr *[]model.Song) {
 	// Genres
@@ -22,7 +42,7 @@ func LoadSongsMetadata(songsArr *[]model.Song) {
 
 	// Songs
 	songsObjArr := []model.Song{
-		{ID: 0, TITLE: "test", ARTIST: "Test artist", YEAR: 1975, DURATION: "9:99", GENRE: genresObjArr[3]},
+		{ID: 0, TITLE: "Test", ARTIST: "Test Artist", YEAR: 9999, DURATION: "9:99", GENRE: genresObjArr[3]},
 		{ID: 1, TITLE: "Bohemian Rhapsody", ARTIST: "Queen", YEAR: 1975, DURATION: "5:54", GENRE: genresObjArr[0]},
 	}
 
@@ -32,11 +52,11 @@ func LoadSongsMetadata(songsArr *[]model.Song) {
 func GetSong(prmTitle string, songsArr []model.Song) model.ResponseSongDTO {
 	var response model.ResponseSongDTO
 
-	cleanSearchTitle := strings.ToLower(strings.ReplaceAll(strings.TrimSpace(prmTitle), " ", ""))
+	cleanSearchTitle := cleanSongTitle(prmTitle)
 
 	for i := 0; i < len(songsArr); i++ {
-		cleanSongTitle := strings.ToLower(strings.ReplaceAll(strings.TrimSpace(songsArr[i].TITLE), " ", ""))
-		print(cleanSearchTitle, " | ", cleanSongTitle, "\n")
+		cleanSongTitle := cleanSongTitle(songsArr[i].TITLE)
+		//log.Print("Comparacion ", i+1, ": ", cleanSearchTitle, " | ", cleanSongTitle, "\n")
 		if cleanSongTitle == cleanSearchTitle {
 			response.SONG_OBJ = songsArr[i]
 			response.CODE = 200
