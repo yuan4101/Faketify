@@ -20,7 +20,6 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	AudioService_GetStreamingSong_FullMethodName = "/streamingServices.AudioService/GetStreamingSong"
-	AudioService_GetMetadata_FullMethodName      = "/streamingServices.AudioService/GetMetadata"
 )
 
 // AudioServiceClient is the client API for AudioService service.
@@ -28,7 +27,6 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AudioServiceClient interface {
 	GetStreamingSong(ctx context.Context, in *SongRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SongPacket], error)
-	GetMetadata(ctx context.Context, in *MetadataRequest, opts ...grpc.CallOption) (*Metadata, error)
 }
 
 type audioServiceClient struct {
@@ -58,22 +56,11 @@ func (c *audioServiceClient) GetStreamingSong(ctx context.Context, in *SongReque
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type AudioService_GetStreamingSongClient = grpc.ServerStreamingClient[SongPacket]
 
-func (c *audioServiceClient) GetMetadata(ctx context.Context, in *MetadataRequest, opts ...grpc.CallOption) (*Metadata, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Metadata)
-	err := c.cc.Invoke(ctx, AudioService_GetMetadata_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // AudioServiceServer is the server API for AudioService service.
 // All implementations must embed UnimplementedAudioServiceServer
 // for forward compatibility.
 type AudioServiceServer interface {
 	GetStreamingSong(*SongRequest, grpc.ServerStreamingServer[SongPacket]) error
-	GetMetadata(context.Context, *MetadataRequest) (*Metadata, error)
 	mustEmbedUnimplementedAudioServiceServer()
 }
 
@@ -86,9 +73,6 @@ type UnimplementedAudioServiceServer struct{}
 
 func (UnimplementedAudioServiceServer) GetStreamingSong(*SongRequest, grpc.ServerStreamingServer[SongPacket]) error {
 	return status.Errorf(codes.Unimplemented, "method GetStreamingSong not implemented")
-}
-func (UnimplementedAudioServiceServer) GetMetadata(context.Context, *MetadataRequest) (*Metadata, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMetadata not implemented")
 }
 func (UnimplementedAudioServiceServer) mustEmbedUnimplementedAudioServiceServer() {}
 func (UnimplementedAudioServiceServer) testEmbeddedByValue()                      {}
@@ -122,36 +106,13 @@ func _AudioService_GetStreamingSong_Handler(srv interface{}, stream grpc.ServerS
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type AudioService_GetStreamingSongServer = grpc.ServerStreamingServer[SongPacket]
 
-func _AudioService_GetMetadata_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MetadataRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AudioServiceServer).GetMetadata(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AudioService_GetMetadata_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AudioServiceServer).GetMetadata(ctx, req.(*MetadataRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // AudioService_ServiceDesc is the grpc.ServiceDesc for AudioService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AudioService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "streamingServices.AudioService",
 	HandlerType: (*AudioServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GetMetadata",
-			Handler:    _AudioService_GetMetadata_Handler,
-		},
-	},
+	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "GetStreamingSong",

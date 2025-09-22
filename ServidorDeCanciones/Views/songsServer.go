@@ -29,7 +29,7 @@ func (s *songsServer) GetSong(ctx context.Context, req *songServices.SongRequest
 	response.Code = resp.CODE
 	response.Message = resp.MESSAGE
 	if p, ok := peer.FromContext(ctx); ok {
-		log.Printf("-> Client(%s) | GET: %s | %d | %s", p.Addr.String(), title, response.Code, response.Message)
+		log.Printf("-> CLIENT: %s | GET: %s | %d | %s", p.Addr.String(), title, response.Code, response.Message)
 	}
 
 	if resp.CODE == 200 {
@@ -55,7 +55,7 @@ func (s *songsServer) GetGenres(ctx context.Context, req *songServices.Empty) (*
 	response.Code = resp.CODE
 	response.Message = resp.MESSAGE
 	if p, ok := peer.FromContext(ctx); ok {
-		log.Printf("-> Client(%s) | GET: Genres | %d | %s", p.Addr.String(), response.Code, response.Message)
+		log.Printf("-> CLIENT: %s | GET: Genres | %d | %s", p.Addr.String(), response.Code, response.Message)
 	}
 
 	if resp.CODE == 200 {
@@ -65,6 +65,38 @@ func (s *songsServer) GetGenres(ctx context.Context, req *songServices.Empty) (*
 				Name: genre.NAME,
 			}
 			response.GenresObjArr = append(response.GenresObjArr, protoGenre)
+		}
+	}
+
+	return &response, nil
+}
+
+func (s *songsServer) GetSongsByGenre(ctx context.Context, req *songServices.SongsByGenreRequest) (*songServices.ResponseSongsDTO, error) {
+	genre := req.GetGenreName()
+
+	resp := services.GetSongsByGenre(genre, songsArr)
+
+	var response songServices.ResponseSongsDTO
+	response.Code = resp.CODE
+	response.Message = resp.MESSAGE
+	if p, ok := peer.FromContext(ctx); ok {
+		log.Printf("-> CLIENT: %s | GET: %s songs | %d | %s", p.Addr.String(), genre, response.Code, response.Message)
+	}
+
+	if resp.CODE == 200 {
+		for _, song := range resp.SONGS_ARR {
+			protoSong := &songServices.Song{
+				Id:       song.ID,
+				Title:    song.TITLE,
+				Artist:   song.ARTIST,
+				Year:     song.YEAR,
+				Duration: song.DURATION,
+				Genre: &songServices.Genre{
+					Id:   song.GENRE.ID,
+					Name: song.GENRE.NAME,
+				},
+			}
+			response.SongsObjArr = append(response.SongsObjArr, protoSong)
 		}
 	}
 

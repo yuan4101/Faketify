@@ -2,28 +2,7 @@ package services
 
 import (
 	model "localServer/grpc-songsServer/Models"
-	"regexp"
-	"strings"
 )
-
-func cleanSongTitle(title string) string {
-	cleaned := strings.ToLower(strings.TrimSpace(title))
-
-	// Convierte acentos a letras normales
-	replacer := strings.NewReplacer(
-		"á", "a", "à", "a", "â", "a", "ä", "a", "ã", "a",
-		"é", "e", "è", "e", "ê", "e", "ë", "e",
-		"í", "i", "ì", "i", "î", "i", "ï", "i",
-		"ó", "o", "ò", "o", "ô", "o", "ö", "o", "õ", "o",
-		"ú", "u", "ù", "u", "û", "u", "ü", "u",
-		"ñ", "n", "ç", "c",
-	)
-	cleaned = replacer.Replace(cleaned)
-
-	// Ahora limpia manteniendo solo a-z, 0-9 y &
-	re := regexp.MustCompile(`[^a-z0-9&]+`)
-	return re.ReplaceAllString(cleaned, "")
-}
 
 func LoadSongsMetadata(songsArr *[]model.Song, genresArr *[]model.Genre) {
 	// Genres
@@ -42,8 +21,45 @@ func LoadSongsMetadata(songsArr *[]model.Song, genresArr *[]model.Genre) {
 
 	// Songs
 	songsObjArr := []model.Song{
-		{ID: 0, TITLE: "Test", ARTIST: "Test Artist", YEAR: 9999, DURATION: "9:99", GENRE: genresObjArr[3]},
-		{ID: 1, TITLE: "Bohemian Rhapsody", ARTIST: "Queen", YEAR: 1975, DURATION: "5:54", GENRE: genresObjArr[0]},
+		// Rock
+		{ID: 0, TITLE: "Californication", ARTIST: "Red Hot Chili Peppers", YEAR: 1999, DURATION: "5:21 Minutos", GENRE: genresObjArr[0]},
+		{ID: 1, TITLE: "De Música Ligera", ARTIST: "Soda Stereo", YEAR: 1990, DURATION: "3:33 Minutos", GENRE: genresObjArr[0]},
+
+		// Pop
+		{ID: 2, TITLE: "As It Was", ARTIST: "Harry Styles", YEAR: 2022, DURATION: "2:43 Minutos", GENRE: genresObjArr[1]},
+		{ID: 3, TITLE: "Flowers", ARTIST: "Miley Cyrus", YEAR: 2023, DURATION: "3:17 Minutos", GENRE: genresObjArr[1]},
+
+		// Jazz
+		{ID: 4, TITLE: "Take Five", ARTIST: "Dave Brubeck", YEAR: 1959, DURATION: "5:24 Minutos", GENRE: genresObjArr[2]},
+		{ID: 5, TITLE: "What A Wonderful World", ARTIST: "Louis Armstrong", YEAR: 1967, DURATION: "2:16 Minutos", GENRE: genresObjArr[2]},
+
+		// Classical
+		{ID: 6, TITLE: "Four Seasons Winter", ARTIST: "Vivaldi", YEAR: 1725, DURATION: "9:26 Minutos", GENRE: genresObjArr[3]},
+		{ID: 7, TITLE: "Moonlight Sonata", ARTIST: "Beethoven", YEAR: 1801, DURATION: "6:14 Minutos", GENRE: genresObjArr[3]},
+
+		// Hip Hop
+		{ID: 8, TITLE: "In Da Club", ARTIST: "50 Cent", YEAR: 2003, DURATION: "3:13 Minutos", GENRE: genresObjArr[4]},
+		{ID: 9, TITLE: "Still D.R.E.", ARTIST: "Dr. Dre ft. Snoop Dogg", YEAR: 1999, DURATION: "4:30 Minutos", GENRE: genresObjArr[4]},
+
+		// Electronic
+		{ID: 10, TITLE: "Faded", ARTIST: "Alan Walker", YEAR: 2015, DURATION: "3:32 Minutos", GENRE: genresObjArr[5]},
+		{ID: 11, TITLE: "Titanium", ARTIST: "David Guetta ft. Sia", YEAR: 2011, DURATION: "4:27 Minutos", GENRE: genresObjArr[5]},
+
+		// Salsa
+		{ID: 12, TITLE: "Idilio", ARTIST: "Willie Colon", YEAR: 1993, DURATION: "5:08 Minutos", GENRE: genresObjArr[6]},
+		{ID: 13, TITLE: "Rebelion", ARTIST: "Joe Arroyo", YEAR: 1986, DURATION: "6:18 Minutos", GENRE: genresObjArr[6]},
+
+		// Reggae
+		{ID: 14, TITLE: "Could you be loved", ARTIST: "Bob Marley", YEAR: 1980, DURATION: "3:50 Minutos", GENRE: genresObjArr[7]},
+		{ID: 15, TITLE: "Sweat (A La La Long)", ARTIST: "Inner Circle", YEAR: 1992, DURATION: "4:27 Minutos", GENRE: genresObjArr[7]},
+
+		// Blues
+		{ID: 16, TITLE: "Sweet Home Chicago", ARTIST: "The Blues Brothers", YEAR: 1980, DURATION: "7:47 Minutos", GENRE: genresObjArr[8]},
+		{ID: 17, TITLE: "The thrill is gone", ARTIST: "B.B. King", YEAR: 1969, DURATION: "5:23 Minutos", GENRE: genresObjArr[8]},
+
+		// Metal
+		{ID: 18, TITLE: "Toxicity", ARTIST: "System of a Down", YEAR: 2001, DURATION: "3:39 Minutos", GENRE: genresObjArr[9]},
+		{ID: 19, TITLE: "Warriors Of Time", ARTIST: "BlackTide", YEAR: 2008, DURATION: "4:12 Minutos", GENRE: genresObjArr[9]},
 	}
 
 	*songsArr = append(*songsArr, songsObjArr...)
@@ -53,12 +69,8 @@ func LoadSongsMetadata(songsArr *[]model.Song, genresArr *[]model.Genre) {
 func GetSong(prmTitle string, songsArr []model.Song) model.ResponseSongDTO {
 	var response model.ResponseSongDTO
 
-	cleanSearchTitle := cleanSongTitle(prmTitle)
-
 	for i := 0; i < len(songsArr); i++ {
-		cleanSongTitle := cleanSongTitle(songsArr[i].TITLE)
-		//log.Print("Comparacion ", i+1, ": ", cleanSearchTitle, " | ", cleanSongTitle, "\n")
-		if cleanSongTitle == cleanSearchTitle {
+		if prmTitle == songsArr[i].TITLE {
 			response.SONG_OBJ = songsArr[i]
 			response.CODE = 200
 			response.MESSAGE = "Song found"
@@ -82,5 +94,29 @@ func GetGenres(genresArr []model.Genre) model.ResponseAllGenresDTO {
 
 	response.CODE = 404
 	response.MESSAGE = "Genres not found"
+	return response
+}
+
+func GetSongsByGenre(prmGenre string, songsArr []model.Song) model.ResponseSongsByGenreDTO {
+	var response model.ResponseSongsByGenreDTO
+	var filteredSongs []model.Song
+	var genreName string
+
+	for i := 0; i < len(songsArr); i++ {
+		if prmGenre == songsArr[i].GENRE.NAME {
+			genreName = songsArr[i].GENRE.NAME
+			filteredSongs = append(filteredSongs, songsArr[i])
+		}
+	}
+
+	if len(filteredSongs) > 0 {
+		response.SONGS_ARR = filteredSongs
+		response.CODE = 200
+		response.MESSAGE = genreName + " Songs found"
+		return response
+	}
+
+	response.CODE = 404
+	response.MESSAGE = genreName + " Songs not found"
 	return response
 }
