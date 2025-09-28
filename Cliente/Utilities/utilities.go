@@ -32,7 +32,7 @@ func ReciveSong(stream streamingServices.AudioService_GetStreamingSongClient, wr
 	for {
 		fragmento, err := stream.Recv()
 		if err == io.EOF {
-			fmt.Println("Cancion recibida completa.")
+			//fmt.Println("Cancion recibida completa.")
 			writer.Close()
 			break
 		}
@@ -51,4 +51,44 @@ func ReciveSong(stream streamingServices.AudioService_GetStreamingSongClient, wr
 	// Esperar a que la reproducción termine
 	<-canalSincronizacion
 	//fmt.Println("Reproducción terminada.")
+}
+
+func cutePrint(prmInt int, prmString string, prmColor string, prmBold bool) {
+	if prmInt == -1 {
+		fmt.Printf("\033[%s%sm%s\033[0m", bold(prmBold), color(prmColor), prmString)
+	} else {
+		fmt.Printf("\033[%s%sm%d\033[0m", bold(prmBold), color(prmColor), prmInt)
+	}
+}
+
+func bold(prmBold bool) string {
+	if prmBold {
+		return "1;"
+	}
+	return ""
+}
+
+func color(prmColor string) string {
+	switch prmColor {
+	case "white":
+		return "1"
+	case "yellow":
+		return "33"
+	case "red":
+		return "31"
+	case "green":
+		return "32"
+	case "blue":
+		return "34"
+	default:
+		return "1"
+	}
+}
+
+func ColorIntPrint(prmInt int, prmColor string, prmBold bool) {
+	cutePrint(prmInt, "", prmColor, prmBold)
+}
+
+func ColorStringPrint(prmString string, prmColor string, prmBold bool) {
+	cutePrint(-1, prmString, prmColor, prmBold)
 }

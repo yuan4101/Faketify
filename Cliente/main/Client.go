@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	utilities "localClient/grpc-client/Utilities"
+	util "localClient/grpc-client/Utilities"
 	"localClient/grpc-client/Views"
 	"localServer/grpc-songServer/songServices"
 	"localServer/grpc-streamingServer/streamingServices"
@@ -139,7 +139,7 @@ func main() {
 			}
 
 		case "5":
-			Views.ColorStringPrint("\nSaliendo...\n", "yellow", false)
+			util.ColorStringPrint("\nSaliendo...\n", "yellow", false)
 			exitOption = "-1"
 
 		default:
@@ -213,9 +213,9 @@ func getStreamingSong(client streamingServices.AudioServiceClient, prmSong *song
 	playbackDone := make(chan bool, 1)
 
 	// Iniciar reproducción en goroutines
-	go utilities.DecodeAndPlay(reader, canalSincronizacion)
+	go util.DecodeAndPlay(reader, canalSincronizacion)
 	go func() {
-		utilities.ReciveSong(stream, writer, canalSincronizacion)
+		util.ReciveSong(stream, writer, canalSincronizacion)
 		playbackDone <- true
 	}()
 
@@ -232,7 +232,7 @@ func getStreamingSong(client streamingServices.AudioServiceClient, prmSong *song
 		select {
 		case input := <-userInputChan:
 			if input == "1" {
-				Views.ColorStringPrint("Deteniendo reproducción...\n", "yellow", false)
+				util.ColorStringPrint("Deteniendo reproducción...\n", "yellow", false)
 				cancel()
 				writer.Close()
 				return true
@@ -240,7 +240,7 @@ func getStreamingSong(client streamingServices.AudioServiceClient, prmSong *song
 				fmt.Println("-> ERROR: Opcion no valida")
 			}
 		case <-playbackDone:
-			fmt.Println("\nReproducción completada.")
+			util.ColorStringPrint("\nReproducción completada.\n", "yellow", false)
 			return false
 		}
 	}

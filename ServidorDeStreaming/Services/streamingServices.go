@@ -20,7 +20,7 @@ func GetStreamingSong(prmTitle string, sendFragmentFunction func([]byte) error) 
 	for {
 		n, err := file.Read(buffer)
 		if err == io.EOF {
-			log.Printf("Cancion enviada completamente desde la fachada.")
+			log.Printf("Stream de la cancion %s terminado.", prmTitle)
 			break
 		}
 		if err != nil {
