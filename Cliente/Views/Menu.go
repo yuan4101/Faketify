@@ -43,8 +43,8 @@ func ShowMenu(prmGenres *songServices.ResponseGenresDTO, prmSongs *songServices.
 		if prmPlay {
 			ColorStringPrint("Cancion: ", "blue", false)
 			ColorStringPrint(prmSong.SongObj.Artist+" - "+prmSong.SongObj.Title+"\n\n", "white", true)
-			ColorStringPrint("\t Reproduciendo cancion... \n\n", "green", true)
-			ColorStringPrint("  1. Ir atras y detener la reproduccion", "red", true)
+			ColorStringPrint("\t Reproduciendo cancion... \n\n\n\n", "green", true)
+			ColorStringPrint("  1. Ir atras y detener la reproduccion\n", "red", true)
 			return "1"
 		} else {
 			ColorStringPrint("Cancion: ", "blue", false)

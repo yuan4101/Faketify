@@ -3,7 +3,6 @@ package services
 import (
 	"fmt"
 	"io"
-	"log"
 	"os"
 )
 
@@ -20,7 +19,7 @@ func GetStreamingSong(prmTitle string, sendFragmentFunction func([]byte) error) 
 	for {
 		n, err := file.Read(buffer)
 		if err == io.EOF {
-			log.Printf("Cancion enviada completamente desde la fachada.")
+			//log.Printf("Cancion enviada completamente desde la fachada.")
 			break
 		}
 		if err != nil {

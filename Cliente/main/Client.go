@@ -150,6 +150,12 @@ func main() {
 
 func read(prmMessage string) string {
 	reader := bufio.NewReader(os.Stdin)
+
+	// Limpiar cualquier dato residual en el buffer
+	for reader.Buffered() > 0 {
+		reader.Discard(reader.Buffered())
+	}
+
 	fmt.Printf("\n%s", prmMessage)
 	varReaded, _ := reader.ReadString('\n')
 	varReaded = strings.TrimSpace(varReaded)
@@ -211,37 +217,134 @@ func getStreamingSong(client streamingServices.AudioServiceClient, prmSong *song
 	canalSincronizacion := make(chan struct{})
 	userInputChan := make(chan string, 1)
 	playbackDone := make(chan bool, 1)
+	progressChan := make(chan string, 1)
 
-	// Iniciar reproducción en goroutines
+	// Convertir duración
+	durationStr := prmSong.SongObj.Duration
+	totalSeconds := parseDurationToSeconds(durationStr)
+
+	// Mover startTime fuera para acceso global
+	startTime := time.Now()
+
+	// Iniciar reproducción
 	go utilities.DecodeAndPlay(reader, canalSincronizacion)
 	go func() {
 		utilities.ReciveSong(stream, writer, canalSincronizacion)
 		playbackDone <- true
 	}()
 
-	// Mostrar menú y esperar entrada del usuario
+	// Gorrutine para progreso
+	go func() {
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			default:
+				elapsed := time.Since(startTime)
+				remaining := totalSeconds - int(elapsed.Seconds())
+
+				if remaining <= 0 {
+					remaining = 0
+				}
+
+				// Formatear a mm:ss
+				minutes := remaining / 60
+				seconds := remaining % 60
+				timeString := fmt.Sprintf("%d:%02d", minutes, seconds)
+
+				select {
+				case progressChan <- timeString:
+				default:
+				}
+
+				if remaining <= 0 {
+					return
+				}
+
+				time.Sleep(300 * time.Millisecond)
+			}
+		}
+	}()
+
+	// Configurar layout inicial
+	fmt.Print("\033[2J\033[H") // Limpiar pantalla
+	Views.ShowSongPlayMenu(prmSong, true)
+
+	// Goroutine para input usando la función reutilizable
+	go func() {
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			default:
+				// Usar la función read reutilizable
+				input := read("Opción: ")
+
+				if input != "" {
+					select {
+					case userInputChan <- input:
+					default:
+						// Si el canal está lleno, descartar la entrada
+					}
+				}
+			}
+		}
+	}()
+
+	// Loop principal
 	for {
-		Views.ShowSongPlayMenu(prmSong, true)
-
-		// Goroutine para leer entrada del usuario
-		go func() {
-			input := read("Opción: ")
-			userInputChan <- input
-		}()
-
 		select {
+		case timeRemaining, ok := <-progressChan:
+			if ok {
+				// Calcular el porcentaje de progreso
+				elapsed := time.Since(startTime)
+				progress := int((elapsed.Seconds() / float64(totalSeconds)) * 100)
+				if progress > 100 {
+					progress = 100
+				}
+
+				fmt.Print("\033[s")
+				fmt.Print("\033[3A\r\033[K")
+				fmt.Printf(" Progreso: [%-50s] %s",
+					repeat("=", progress/2)+">", timeRemaining)
+				fmt.Print("\033[u")
+			}
+
 		case input := <-userInputChan:
 			if input == "1" {
-				Views.ColorStringPrint("Deteniendo reproducción...\n", "yellow", false)
+				Views.ColorStringPrint("\nDeteniendo reproducción...\n", "yellow", false)
 				cancel()
 				writer.Close()
 				return true
 			} else {
-				fmt.Println("-> ERROR: Opcion no valida")
+				fmt.Print("\033[K")
+				fmt.Printf("-> ERROR: Opción '%s' no válida\n", input)
+				// No necesitamos imprimir "Opción: " aquí, la función read() se encarga
 			}
+
 		case <-playbackDone:
 			fmt.Println("\nReproducción completada.")
 			return false
+
+		case <-ctx.Done():
+			return true
 		}
 	}
+}
+
+func parseDurationToSeconds(durationStr string) int {
+	var minutes, seconds int
+	fmt.Sscanf(durationStr, "%d:%d", &minutes, &seconds)
+	return minutes*60 + seconds
+}
+
+func repeat(s string, count int) string {
+	if count <= 0 {
+		return ""
+	}
+	result := ""
+	for i := 0; i < count; i++ {
+		result += s
+	}
+	return result
 }
