@@ -1,14 +1,11 @@
 package main
 
 import (
-	"bufio"
 	"context"
 	"fmt"
 	"io"
 	"log"
-	"os"
 	"strconv"
-	"strings"
 	"time"
 
 	util "localClient/grpc-client/Utilities"
@@ -46,7 +43,7 @@ func main() {
 
 		if exitOption == "0" {
 			Views.ShowMainMenu()
-			varOpt = read("Opcion: ")
+			varOpt = util.Read("Opcion: ")
 			switch varOpt {
 			case "2":
 				varOpt = "5"
@@ -64,7 +61,7 @@ func main() {
 				continue
 			}
 			exitOption = Views.ShowGenresMenu(genres)
-			genreOption = read("Opcion: ")
+			genreOption = util.Read("Opcion: ")
 			genreIndex, _ := strconv.Atoi(genreOption)
 			exitIndex, _ := strconv.Atoi(exitOption)
 
@@ -88,7 +85,7 @@ func main() {
 				continue
 			}
 			exitOption = Views.ShowSongsMenu(genreOption, songs)
-			songOption = read("Opcion: ")
+			songOption = util.Read("Opcion: ")
 			songIndex, _ := strconv.Atoi(songOption)
 			exitIndex, _ := strconv.Atoi(exitOption)
 
@@ -113,7 +110,7 @@ func main() {
 				continue
 			}
 			exitOption = Views.ShowSongMenu(varSong)
-			songAction := read("Opcion: ")
+			songAction := util.Read("Opcion: ")
 			actionIndex, _ := strconv.Atoi(songAction)
 			exitIndex, _ := strconv.Atoi(exitOption)
 
@@ -148,14 +145,9 @@ func main() {
 	}
 }
 
-func read(prmMessage string) string {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Printf("\n%s", prmMessage)
-	varReaded, _ := reader.ReadString('\n')
-	varReaded = strings.TrimSpace(varReaded)
-	return varReaded
-}
-
+// getGenres solicita al servidor la lista de géneros musicales disponibles.
+// Establece un timeout de 5 segundos para la llamada gRPC.
+// Retorna la respuesta del servidor o nil en caso de error.
 func getGenres(connection songServices.SongServiceClient) *songServices.ResponseGenresDTO {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
@@ -168,6 +160,9 @@ func getGenres(connection songServices.SongServiceClient) *songServices.Response
 	return res
 }
 
+// getSongsByGenre solicita canciones filtradas por género al servidor.
+// Crea una petición con el nombre del género y timeout de 5 segundos.
+// Retorna la lista de canciones del género o nil en caso de error.
 func getSongsByGenre(connection songServices.SongServiceClient, prmGenre string) *songServices.ResponseSongsDTO {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
@@ -182,6 +177,9 @@ func getSongsByGenre(connection songServices.SongServiceClient, prmGenre string)
 	return res
 }
 
+// getSong solicita los metadatos de una canción por título al servidor.
+// Realiza una petición gRPC con timeout de 5 segundos.
+// Retorna la información de la canción o nil en caso de error.
 func getSong(connection songServices.SongServiceClient, prmSongTitle string) *songServices.ResponseSongDTO {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
@@ -196,6 +194,10 @@ func getSong(connection songServices.SongServiceClient, prmSongTitle string) *so
 	return res
 }
 
+// getStreamingSong inicia la reproducción por streaming de una canción.
+// Establece conexión de streaming, maneja reproducción en tiempo real y
+// proporciona interfaz de control para pausar/continuar la reproducción.
+// Retorna true si el usuario detiene la reproducción, false si termina naturalmente.
 func getStreamingSong(client streamingServices.AudioServiceClient, prmSong *songServices.ResponseSongDTO) bool {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 	defer cancel()
@@ -225,7 +227,7 @@ func getStreamingSong(client streamingServices.AudioServiceClient, prmSong *song
 
 		// Goroutine para leer entrada del usuario
 		go func() {
-			input := read("Opción: ")
+			input := util.Read("Opción: ")
 			userInputChan <- input
 		}()
 

@@ -7,6 +7,10 @@ import (
 	"strconv"
 )
 
+// ShowMenu renderiza dinámicamente diferentes vistas de la aplicación.
+// Muestra: menú principal, lista de géneros, canciones por género,
+// detalles de canción o controles de reproducción según los parámetros.
+// Retorna el último índice disponible como string para validación.
 func ShowMenu(prmGenres *songServices.ResponseGenresDTO, prmSongs *songServices.ResponseSongsDTO, prmGenre string, prmSong *songServices.ResponseSongDTO, prmPlay bool) string {
 	util.ColorStringPrint("\n\t Faketify \t\n\n", "green", true)
 
@@ -71,22 +75,35 @@ func ShowMenu(prmGenres *songServices.ResponseGenresDTO, prmSongs *songServices.
 	}
 }
 
+// ShowMainMenu muestra el menú principal con opciones de ver géneros o salir.
+// Retorna "2" como último índice disponible.
 func ShowMainMenu() string {
 	return ShowMenu(nil, nil, "", nil, false)
 }
 
+// ShowGenresMenu muestra la lista de géneros musicales disponibles.
+// Retorna el índice de la opción "Atrás" para navegación.
 func ShowGenresMenu(prmGenres *songServices.ResponseGenresDTO) string {
 	return ShowMenu(prmGenres, nil, "", nil, false)
 }
 
+// ShowSongsMenu muestra las canciones de un género específico.
+// Incluye el nombre del género como título y lista de canciones.
+// Retorna el índice de la opción "Atrás".
 func ShowSongsMenu(prmGenre string, prmSongs *songServices.ResponseSongsDTO) string {
 	return ShowMenu(nil, prmSongs, prmGenre, nil, false)
 }
 
+// ShowSongMenu muestra los detalles completos de una canción.
+// Incluye metadatos y opción para reproducir o volver atrás.
+// Retorna "2" como último índice.
 func ShowSongMenu(prmSong *songServices.ResponseSongDTO) string {
 	return ShowMenu(nil, nil, "", prmSong, false)
 }
 
+// ShowSongPlayMenu muestra controles durante la reproducción.
+// Opción para detener la reproducción y volver atrás.
+// Retorna "1" como única opción disponible.
 func ShowSongPlayMenu(prmSong *songServices.ResponseSongDTO, prmPlay bool) string {
 	return ShowMenu(nil, nil, "", prmSong, true)
 }

@@ -7,6 +7,12 @@ import (
 	"os"
 )
 
+// GetStreamingSong transmite un archivo de audio en fragmentos de 64KB.
+// Parametros:
+//   - prmTitle: Nombre del archivo de audio.
+//   - sendFragmentFunction: Funcion para enviar cada fragmento.
+//
+// Retorna: Error en caso de fallo durante la lectura o envio.
 func GetStreamingSong(prmTitle string, sendFragmentFunction func([]byte) error) error {
 	file, err := os.Open("../Songs/" + prmTitle)
 	if err != nil {

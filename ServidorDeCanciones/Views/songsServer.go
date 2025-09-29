@@ -20,6 +20,9 @@ type songsServer struct {
 	songServices.UnimplementedSongServiceServer
 }
 
+// GetSong implementa el servicio gRPC para buscar una canción por título.
+// Recibe una solicitud con el título y retorna los metadatos de la canción.
+// Loggea la consulta del cliente y convierte la respuesta al formato gRPC.
 func (s *songsServer) GetSong(ctx context.Context, req *songServices.SongRequest) (*songServices.ResponseSongDTO, error) {
 	title := req.GetTitle()
 
@@ -48,6 +51,9 @@ func (s *songsServer) GetSong(ctx context.Context, req *songServices.SongRequest
 	return &response, nil
 }
 
+// GetGenres implementa el servicio gRPC para obtener todos los géneros musicales.
+// Retorna la lista completa de géneros en formato protobuf.
+// Loggea la consulta del cliente y convierte los datos al formato gRPC.
 func (s *songsServer) GetGenres(ctx context.Context, req *songServices.Empty) (*songServices.ResponseGenresDTO, error) {
 	resp := services.GetGenres(genresArr)
 
@@ -71,6 +77,9 @@ func (s *songsServer) GetGenres(ctx context.Context, req *songServices.Empty) (*
 	return &response, nil
 }
 
+// GetSongsByGenre implementa el servicio gRPC para obtener canciones por género.
+// Filtra el catálogo por nombre de género y retorna las canciones correspondientes.
+// Convierte los resultados al formato protobuf y loggea la consulta del cliente.
 func (s *songsServer) GetSongsByGenre(ctx context.Context, req *songServices.SongsByGenreRequest) (*songServices.ResponseSongsDTO, error) {
 	genre := req.GetGenreName()
 

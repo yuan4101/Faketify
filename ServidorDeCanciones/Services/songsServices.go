@@ -4,6 +4,9 @@ import (
 	model "localServer/grpc-songsServer/Models"
 )
 
+// LoadSongsMetadata inicializa los datos de prueba de la aplicación.
+// Carga un catálogo predefinido de géneros musicales y canciones.
+// Modifica los slices pasados por referencia agregando los datos de prueba.
 func LoadSongsMetadata(songsArr *[]model.Song, genresArr *[]model.Genre) {
 	// Genres
 	genresObjArr := []model.Genre{
@@ -66,6 +69,8 @@ func LoadSongsMetadata(songsArr *[]model.Song, genresArr *[]model.Genre) {
 	*genresArr = append(*genresArr, genresObjArr...)
 }
 
+// GetSong busca una canción por título en el array proporcionado.
+// Retorna un DTO de respuesta con la canción encontrada o error 404.
 func GetSong(prmTitle string, songsArr []model.Song) model.ResponseSongDTO {
 	var response model.ResponseSongDTO
 
@@ -82,6 +87,9 @@ func GetSong(prmTitle string, songsArr []model.Song) model.ResponseSongDTO {
 	return response
 }
 
+// GetGenres retorna todos los géneros musicales disponibles.
+// Si el array no está vacío, retorna código 200 con los géneros.
+// Si está vacío, retorna código 404 indicando que no hay géneros.
 func GetGenres(genresArr []model.Genre) model.ResponseAllGenresDTO {
 	var response model.ResponseAllGenresDTO
 
@@ -97,6 +105,9 @@ func GetGenres(genresArr []model.Genre) model.ResponseAllGenresDTO {
 	return response
 }
 
+// GetSongsByGenre filtra canciones por nombre de género.
+// Retorna un array con las canciones del género especificado.
+// Código 200 si encuentra canciones, 404 si no hay coincidencias.
 func GetSongsByGenre(prmGenre string, songsArr []model.Song) model.ResponseSongsByGenreDTO {
 	var response model.ResponseSongsByGenreDTO
 	var filteredSongs []model.Song

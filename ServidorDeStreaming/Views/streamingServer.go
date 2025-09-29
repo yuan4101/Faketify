@@ -16,13 +16,15 @@ type streamingServer struct {
 	streamingServices.UnimplementedAudioServiceServer
 }
 
-// Implementación del procedimiento remoto
+// GetStreamingSong implementa el servicio gRPC para streaming de audio.
+// Recibe una solicitud de canción y transmite los datos en paquetes por el stream.
+// Utiliza el servicio subyacente para leer el archivo y enviar fragmentos.
 func (s *streamingServer) GetStreamingSong(req *streamingServices.SongRequest, stream streamingServices.AudioService_GetStreamingSongServer) error {
 
 	if p, ok := peer.FromContext(stream.Context()); ok {
 		log.Printf("-> CLIENT: %s | GET: %s ", p.Addr.String(), req.GetTitle())
 	}
-	// Usamos la fachada directamente
+
 	return services.GetStreamingSong(
 		req.Title,
 		func(data []byte) error {
