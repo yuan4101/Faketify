@@ -11,5 +11,6 @@ type Song struct {
 	ARTIST   string
 	YEAR     int32
 	DURATION string
+	LANGUAGE string
 	GENRE    Genre
 }

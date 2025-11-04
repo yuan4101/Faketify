@@ -1,0 +1,13 @@
+/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/cliente_java_rmi/src/main/java/co/edu/unicauca/fachadaServices/services/FachadaGestorUsuariosIml.java
+/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/cliente_java_rmi/src/main/java/co/edu/unicauca/fachadaServices/DTO/PreferenciaArtistaDTORespuesta.java
+/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/cliente_java_rmi/src/main/java/co/edu/unicauca/configuracion/servicios/ClienteDeObjetos.java
+/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/cliente_java_rmi/src/main/java/co/edu/unicauca/fachadaServices/DTO/PreferenciasDTORespuesta.java
+/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/cliente_java_rmi/src/main/java/co/edu/unicauca/grpc/PreferenciasGrpcServiceImpl.java
+/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/cliente_java_rmi/src/main/java/co/edu/unicauca/utilidades/UtilidadesConsola.java
+/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/cliente_java_rmi/src/main/java/co/edu/unicauca/configuracion/lector/LectorPropiedadesConfig.java
+/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/cliente_java_rmi/src/main/java/co/edu/unicauca/capaDeControladores/ControladorPreferenciasUsuariosInt.java
+/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/cliente_java_rmi/src/main/java/co/edu/unicauca/grpc/PreferenciasGrpcServer.java
+/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/cliente_java_rmi/src/main/java/co/edu/unicauca/fachadaServices/DTO/PreferenciaGeneroDTORespuesta.java
+/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/cliente_java_rmi/src/main/java/co/edu/unicauca/fachadaServices/DTO/PreferenciaIdiomaDTORespuesta.java
+/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/cliente_java_rmi/target/generated-sources/protobuf/java/co/edu/unicauca/grpc/Preferencias.java
+/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/cliente_java_rmi/target/generated-sources/protobuf/grpc-java/co/edu/unicauca/grpc/PreferenciasServiceGrpc.java

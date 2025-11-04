@@ -204,7 +204,8 @@ type Song struct {
 	Artist        string                 `protobuf:"bytes,3,opt,name=artist,proto3" json:"artist,omitempty"`
 	Year          int32                  `protobuf:"varint,4,opt,name=year,proto3" json:"year,omitempty"`
 	Duration      string                 `protobuf:"bytes,5,opt,name=duration,proto3" json:"duration,omitempty"`
-	Genre         *Genre                 `protobuf:"bytes,6,opt,name=genre,proto3" json:"genre,omitempty"`
+	Language      string                 `protobuf:"bytes,6,opt,name=language,proto3" json:"language,omitempty"`
+	Genre         *Genre                 `protobuf:"bytes,7,opt,name=genre,proto3" json:"genre,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -270,6 +271,13 @@ func (x *Song) GetYear() int32 {
 func (x *Song) GetDuration() string {
 	if x != nil {
 		return x.Duration
+	}
+	return ""
+}
+
+func (x *Song) GetLanguage() string {
+	if x != nil {
+		return x.Language
 	}
 	return ""
 }
@@ -473,14 +481,15 @@ const file_songServices_proto_rawDesc = "" +
 	"\x05title\x18\x01 \x01(\tR\x05title\"+\n" +
 	"\x05Genre\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"\x9f\x01\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"\xbb\x01\n" +
 	"\x04Song\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x16\n" +
 	"\x06artist\x18\x03 \x01(\tR\x06artist\x12\x12\n" +
 	"\x04year\x18\x04 \x01(\x05R\x04year\x12\x1a\n" +
-	"\bduration\x18\x05 \x01(\tR\bduration\x12)\n" +
-	"\x05genre\x18\x06 \x01(\v2\x13.songServices.GenreR\x05genre\"m\n" +
+	"\bduration\x18\x05 \x01(\tR\bduration\x12\x1a\n" +
+	"\blanguage\x18\x06 \x01(\tR\blanguage\x12)\n" +
+	"\x05genre\x18\a \x01(\v2\x13.songServices.GenreR\x05genre\"m\n" +
 	"\x0fResponseSongDTO\x12,\n" +
 	"\asongObj\x18\x01 \x01(\v2\x12.songServices.SongR\asongObj\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\x05R\x04code\x12\x18\n" +

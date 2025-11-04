@@ -30,7 +30,8 @@ message Song {
   string artist = 3;
 	int32 year = 4;
 	string duration = 5;
-	Genre genre = 6;
+  string language = 6;
+	Genre genre = 7;
 }
 
 message ResponseSongDTO {

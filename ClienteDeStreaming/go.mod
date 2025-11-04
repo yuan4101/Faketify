@@ -4,7 +4,8 @@ go 1.24.5
 
 require (
 	github.com/faiface/beep v1.1.0
-	google.golang.org/grpc v1.75.1
+	google.golang.org/grpc v1.76.0
+	google.golang.org/protobuf v1.36.10
 	localServer/grpc-songServer v0.0.0
 	localServer/grpc-streamingServer v0.0.0
 )
@@ -16,11 +17,10 @@ require (
 	golang.org/x/exp v0.0.0-20190306152737-a1d7652674e8 // indirect
 	golang.org/x/image v0.0.0-20190227222117-0694c2d4d067 // indirect
 	golang.org/x/mobile v0.0.0-20190415191353-3e0bab5405d6 // indirect
-	golang.org/x/net v0.41.0 // indirect
-	golang.org/x/sys v0.33.0 // indirect
-	golang.org/x/text v0.26.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250707201910-8d1bb00bc6a7 // indirect
-	google.golang.org/protobuf v1.36.9 // indirect
+	golang.org/x/net v0.42.0 // indirect
+	golang.org/x/sys v0.34.0 // indirect
+	golang.org/x/text v0.27.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250804133106-a7a43d27e69b // indirect
 )
 
 replace localServer/grpc-songServer => ../ServidorDeCanciones
