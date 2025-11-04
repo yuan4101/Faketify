@@ -2,8 +2,11 @@ package main
 
 import (
 	"context"
+	"fmt"
+	controlador "localServer/grpc-songsServer/capaControladores"
 	"log"
 	"net"
+	"net/http"
 
 	models "localServer/grpc-songsServer/Models"
 	services "localServer/grpc-songsServer/Services"
@@ -113,20 +116,56 @@ func (s *songsServer) GetSongsByGenre(ctx context.Context, req *songServices.Son
 	return &response, nil
 }
 
+// SaveSong implementa el servicio gRPC para guardar una canción
+func (s *songsServer) SaveSong(ctx context.Context, req *songServices.SaveSongRequest) (*songServices.SaveSongResponse, error) {
+	if p, ok := peer.FromContext(ctx); ok {
+		log.Printf("| CLIENT: %s | SAVING: %s by %s", p.Addr.String(), req.Title, req.Artist)
+	}
+
+	// Crear DTO de entrada
+	cancionDTO := &models.CancionAlmacenarDTOInput{
+		Titulo:   req.Title,
+		Artista:  req.Artist,
+		Año:      req.Year,
+		Duracion: req.Duration,
+		Idioma:   req.Language,
+		Genero:   req.Genre,
+	}
+
+	// Guardar archivo Y agregar a songsArr
+	songID := services.SaveSongFile(req.FileContent, cancionDTO, &songsArr, genresArr)
+
+	response := &songServices.SaveSongResponse{
+		Code:    200,
+		Message: "Song saved successfully",
+		SongId:  songID,
+	}
+
+	return response, nil
+}
+
 func main() {
 	listener, err := net.Listen("tcp", ":50053")
 	if err != nil {
 		log.Fatalf("Failed to open port 50053: %v", err)
 	}
 
+	// ✅ Cargar metadatos de canciones PRIMERO
+	services.LoadSongsMetadata(&songsArr, &genresArr)
+
+	go func() {
+		// ✅ Pasar los arrays al controlador
+		ctrl := controlador.NuevoControladorAlmacenamientoCanciones(&songsArr, genresArr)
+		http.HandleFunc("/canciones/almacenamiento", ctrl.AlmacenarAudioCancion)
+		fmt.Println("✅ Servicio de Almacenamiento escuchando en el puerto 5001...")
+		if err := http.ListenAndServe(":5001", nil); err != nil {
+			fmt.Println("Error iniciando el servidor:", err)
+		}
+	}()
+
 	// Crear servidor gRPC
 	grpcServer := grpc.NewServer()
-
-	// Rrgistrar el servicio
 	songServices.RegisterSongServiceServer(grpcServer, &songsServer{})
-
-	// Cargar metadatos de canciones
-	services.LoadSongsMetadata(&songsArr, &genresArr)
 
 	// Iniciar el servidor
 	log.Println("Songs gRPC server listening on port 50053")

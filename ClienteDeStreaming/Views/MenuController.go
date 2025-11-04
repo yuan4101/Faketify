@@ -277,8 +277,12 @@ func (mc *Controller) handleSongDetail() {
 	fmt.Println(mc.handler.CurrentSong.SongObj.Artist)
 	util.ColorStringPrint("🎸 Género: ", "green", false)
 	fmt.Println(mc.handler.CurrentSong.SongObj.Genre.GetName())
+	util.ColorStringPrint(" Año: ", "green", false)
+	fmt.Println(mc.handler.CurrentSong.SongObj.Year)
 	util.ColorStringPrint("🌐 Idioma: ", "green", false)  // ← NUEVO
 	fmt.Println(mc.handler.CurrentSong.SongObj.Language) // ← NUEVO
+	util.ColorStringPrint(" Duracion: ", "green", false)
+	fmt.Println(mc.handler.CurrentSong.SongObj.Duration)
 
 	util.ColorStringPrint("\n1. ", "yellow", false)
 	fmt.Println("Reproducir")
