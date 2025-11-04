@@ -7,6 +7,7 @@ service SongService {
   rpc GetGenres(Empty) returns (ResponseGenresDTO);
   rpc GetSongsByGenre(SongsByGenreRequest) returns (ResponseSongsDTO);
   rpc GetSong(SongRequest) returns (ResponseSongDTO);
+  rpc SaveSong(SaveSongRequest) returns (SaveSongResponse);  // ← NUEVO
 }
 
 message Empty {}
@@ -19,6 +20,24 @@ message SongRequest {
   string title = 1;
 }
 
+// NUEVO: Mensaje para guardar canción
+message SaveSongRequest {
+  string title = 1;
+  string artist = 2;
+  string year = 3;
+  string duration = 4;
+  string language = 5;
+  string genre = 6;
+  bytes fileContent = 7;  // Contenido binario del archivo MP3
+}
+
+// NUEVO: Respuesta al guardar
+message SaveSongResponse {
+  int32 code = 1;
+  string message = 2;
+  string songId = 3;
+}
+
 message Genre {
 	int32 id = 1;
 	string name = 2;
@@ -28,9 +47,10 @@ message Song {
 	int32 id = 1;
   string title = 2;
   string artist = 3;
-	int32 year = 4;
+	string year = 4;
 	string duration = 5;
-	Genre genre = 6;
+  string language = 6;
+	Genre genre = 7;
 }
 
 message ResponseSongDTO {

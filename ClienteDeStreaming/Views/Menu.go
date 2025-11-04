@@ -60,7 +60,7 @@ func ShowMenu(prmGenres *songServices.ResponseGenresDTO, prmSongs *songServices.
 			util.ColorStringPrint("\t• Artista: ", "blue", false)
 			util.ColorStringPrint(prmSong.SongObj.Artist+"\n", "white", true)
 			util.ColorStringPrint("\t• Año de lanzamiento: ", "blue", false)
-			util.ColorIntPrint(int(prmSong.SongObj.Year), "white", true)
+			//util.ColorIntPrint(int(prmSong.SongObj.Year), "white", true)
 			util.ColorStringPrint("\n\t• Duracion: ", "blue", false)
 			util.ColorStringPrint(prmSong.SongObj.Duration+"\n\n", "white", true)
 

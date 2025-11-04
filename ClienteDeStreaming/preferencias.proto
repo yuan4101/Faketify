@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package co.edu.unicauca.grpc;
+option go_package = "localClient/grpc-client/preferenciasGrpc";
+
+service PreferenciasService {
+  rpc ObtenerPreferenciasUsuario(PreferenciaRequest) returns (PreferenciaResponse);
+}
+
+message PreferenciaRequest {
+  string nombreUsuario = 1;
+}
+
+message Genero {
+  string nombreGenero = 1;
+  int32 numeroPreferencias = 2;
+}
+
+message Artista {
+  string nombreArtista = 1;
+  int32 numeroPreferencias = 2;
+}
+
+// NUEVO: Mensaje para preferencias de idiomas
+message Idioma {
+  string nombreIdioma = 1;
+  int32 numeroPreferencias = 2;
+}
+
+message PreferenciaResponse {
+  int32 idUsuario = 1;
+  repeated Genero preferenciasGeneros = 2;
+  repeated Artista preferenciasArtistas = 3;
+  repeated Idioma preferenciasIdiomas = 4;  // ← NUEVO CAMPO
+}

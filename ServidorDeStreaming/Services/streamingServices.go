@@ -14,7 +14,7 @@ import (
 //
 // Retorna: Error en caso de fallo durante la lectura o envio.
 func GetStreamingSong(prmTitle string, sendFragmentFunction func([]byte) error) error {
-	file, err := os.Open("../Songs/" + prmTitle)
+	file, err := os.Open("../../RepositorioCanciones/" + prmTitle)
 	if err != nil {
 		return fmt.Errorf("no se pudo abrir el archivo: %w", err)
 	}

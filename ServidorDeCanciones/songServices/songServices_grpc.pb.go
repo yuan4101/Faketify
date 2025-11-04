@@ -22,6 +22,7 @@ const (
 	SongService_GetGenres_FullMethodName       = "/songServices.SongService/GetGenres"
 	SongService_GetSongsByGenre_FullMethodName = "/songServices.SongService/GetSongsByGenre"
 	SongService_GetSong_FullMethodName         = "/songServices.SongService/GetSong"
+	SongService_SaveSong_FullMethodName        = "/songServices.SongService/SaveSong"
 )
 
 // SongServiceClient is the client API for SongService service.
@@ -31,6 +32,7 @@ type SongServiceClient interface {
 	GetGenres(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ResponseGenresDTO, error)
 	GetSongsByGenre(ctx context.Context, in *SongsByGenreRequest, opts ...grpc.CallOption) (*ResponseSongsDTO, error)
 	GetSong(ctx context.Context, in *SongRequest, opts ...grpc.CallOption) (*ResponseSongDTO, error)
+	SaveSong(ctx context.Context, in *SaveSongRequest, opts ...grpc.CallOption) (*SaveSongResponse, error)
 }
 
 type songServiceClient struct {
@@ -71,6 +73,16 @@ func (c *songServiceClient) GetSong(ctx context.Context, in *SongRequest, opts .
 	return out, nil
 }
 
+func (c *songServiceClient) SaveSong(ctx context.Context, in *SaveSongRequest, opts ...grpc.CallOption) (*SaveSongResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SaveSongResponse)
+	err := c.cc.Invoke(ctx, SongService_SaveSong_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SongServiceServer is the server API for SongService service.
 // All implementations must embed UnimplementedSongServiceServer
 // for forward compatibility.
@@ -78,6 +90,7 @@ type SongServiceServer interface {
 	GetGenres(context.Context, *Empty) (*ResponseGenresDTO, error)
 	GetSongsByGenre(context.Context, *SongsByGenreRequest) (*ResponseSongsDTO, error)
 	GetSong(context.Context, *SongRequest) (*ResponseSongDTO, error)
+	SaveSong(context.Context, *SaveSongRequest) (*SaveSongResponse, error)
 	mustEmbedUnimplementedSongServiceServer()
 }
 
@@ -96,6 +109,9 @@ func (UnimplementedSongServiceServer) GetSongsByGenre(context.Context, *SongsByG
 }
 func (UnimplementedSongServiceServer) GetSong(context.Context, *SongRequest) (*ResponseSongDTO, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSong not implemented")
+}
+func (UnimplementedSongServiceServer) SaveSong(context.Context, *SaveSongRequest) (*SaveSongResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SaveSong not implemented")
 }
 func (UnimplementedSongServiceServer) mustEmbedUnimplementedSongServiceServer() {}
 func (UnimplementedSongServiceServer) testEmbeddedByValue()                     {}
@@ -172,6 +188,24 @@ func _SongService_GetSong_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SongService_SaveSong_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveSongRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SongServiceServer).SaveSong(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SongService_SaveSong_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SongServiceServer).SaveSong(ctx, req.(*SaveSongRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SongService_ServiceDesc is the grpc.ServiceDesc for SongService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -190,6 +224,10 @@ var SongService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSong",
 			Handler:    _SongService_GetSong_Handler,
+		},
+		{
+			MethodName: "SaveSong",
+			Handler:    _SongService_SaveSong_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

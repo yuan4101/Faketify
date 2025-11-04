@@ -145,6 +145,160 @@ func (x *SongRequest) GetTitle() string {
 	return ""
 }
 
+// NUEVO: Mensaje para guardar canción
+type SaveSongRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
+	Artist        string                 `protobuf:"bytes,2,opt,name=artist,proto3" json:"artist,omitempty"`
+	Year          string                 `protobuf:"bytes,3,opt,name=year,proto3" json:"year,omitempty"`
+	Duration      string                 `protobuf:"bytes,4,opt,name=duration,proto3" json:"duration,omitempty"`
+	Language      string                 `protobuf:"bytes,5,opt,name=language,proto3" json:"language,omitempty"`
+	Genre         string                 `protobuf:"bytes,6,opt,name=genre,proto3" json:"genre,omitempty"`
+	FileContent   []byte                 `protobuf:"bytes,7,opt,name=fileContent,proto3" json:"fileContent,omitempty"` // Contenido binario del archivo MP3
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SaveSongRequest) Reset() {
+	*x = SaveSongRequest{}
+	mi := &file_songServices_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SaveSongRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SaveSongRequest) ProtoMessage() {}
+
+func (x *SaveSongRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_songServices_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SaveSongRequest.ProtoReflect.Descriptor instead.
+func (*SaveSongRequest) Descriptor() ([]byte, []int) {
+	return file_songServices_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *SaveSongRequest) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *SaveSongRequest) GetArtist() string {
+	if x != nil {
+		return x.Artist
+	}
+	return ""
+}
+
+func (x *SaveSongRequest) GetYear() string {
+	if x != nil {
+		return x.Year
+	}
+	return ""
+}
+
+func (x *SaveSongRequest) GetDuration() string {
+	if x != nil {
+		return x.Duration
+	}
+	return ""
+}
+
+func (x *SaveSongRequest) GetLanguage() string {
+	if x != nil {
+		return x.Language
+	}
+	return ""
+}
+
+func (x *SaveSongRequest) GetGenre() string {
+	if x != nil {
+		return x.Genre
+	}
+	return ""
+}
+
+func (x *SaveSongRequest) GetFileContent() []byte {
+	if x != nil {
+		return x.FileContent
+	}
+	return nil
+}
+
+// NUEVO: Respuesta al guardar
+type SaveSongResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	SongId        string                 `protobuf:"bytes,3,opt,name=songId,proto3" json:"songId,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SaveSongResponse) Reset() {
+	*x = SaveSongResponse{}
+	mi := &file_songServices_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SaveSongResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SaveSongResponse) ProtoMessage() {}
+
+func (x *SaveSongResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_songServices_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SaveSongResponse.ProtoReflect.Descriptor instead.
+func (*SaveSongResponse) Descriptor() ([]byte, []int) {
+	return file_songServices_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *SaveSongResponse) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *SaveSongResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *SaveSongResponse) GetSongId() string {
+	if x != nil {
+		return x.SongId
+	}
+	return ""
+}
+
 type Genre struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -155,7 +309,7 @@ type Genre struct {
 
 func (x *Genre) Reset() {
 	*x = Genre{}
-	mi := &file_songServices_proto_msgTypes[3]
+	mi := &file_songServices_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -167,7 +321,7 @@ func (x *Genre) String() string {
 func (*Genre) ProtoMessage() {}
 
 func (x *Genre) ProtoReflect() protoreflect.Message {
-	mi := &file_songServices_proto_msgTypes[3]
+	mi := &file_songServices_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -180,7 +334,7 @@ func (x *Genre) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Genre.ProtoReflect.Descriptor instead.
 func (*Genre) Descriptor() ([]byte, []int) {
-	return file_songServices_proto_rawDescGZIP(), []int{3}
+	return file_songServices_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *Genre) GetId() int32 {
@@ -202,16 +356,17 @@ type Song struct {
 	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
 	Artist        string                 `protobuf:"bytes,3,opt,name=artist,proto3" json:"artist,omitempty"`
-	Year          int32                  `protobuf:"varint,4,opt,name=year,proto3" json:"year,omitempty"`
+	Year          string                 `protobuf:"bytes,4,opt,name=year,proto3" json:"year,omitempty"`
 	Duration      string                 `protobuf:"bytes,5,opt,name=duration,proto3" json:"duration,omitempty"`
-	Genre         *Genre                 `protobuf:"bytes,6,opt,name=genre,proto3" json:"genre,omitempty"`
+	Language      string                 `protobuf:"bytes,6,opt,name=language,proto3" json:"language,omitempty"`
+	Genre         *Genre                 `protobuf:"bytes,7,opt,name=genre,proto3" json:"genre,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Song) Reset() {
 	*x = Song{}
-	mi := &file_songServices_proto_msgTypes[4]
+	mi := &file_songServices_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -223,7 +378,7 @@ func (x *Song) String() string {
 func (*Song) ProtoMessage() {}
 
 func (x *Song) ProtoReflect() protoreflect.Message {
-	mi := &file_songServices_proto_msgTypes[4]
+	mi := &file_songServices_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -236,7 +391,7 @@ func (x *Song) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Song.ProtoReflect.Descriptor instead.
 func (*Song) Descriptor() ([]byte, []int) {
-	return file_songServices_proto_rawDescGZIP(), []int{4}
+	return file_songServices_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *Song) GetId() int32 {
@@ -260,16 +415,23 @@ func (x *Song) GetArtist() string {
 	return ""
 }
 
-func (x *Song) GetYear() int32 {
+func (x *Song) GetYear() string {
 	if x != nil {
 		return x.Year
 	}
-	return 0
+	return ""
 }
 
 func (x *Song) GetDuration() string {
 	if x != nil {
 		return x.Duration
+	}
+	return ""
+}
+
+func (x *Song) GetLanguage() string {
+	if x != nil {
+		return x.Language
 	}
 	return ""
 }
@@ -292,7 +454,7 @@ type ResponseSongDTO struct {
 
 func (x *ResponseSongDTO) Reset() {
 	*x = ResponseSongDTO{}
-	mi := &file_songServices_proto_msgTypes[5]
+	mi := &file_songServices_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -304,7 +466,7 @@ func (x *ResponseSongDTO) String() string {
 func (*ResponseSongDTO) ProtoMessage() {}
 
 func (x *ResponseSongDTO) ProtoReflect() protoreflect.Message {
-	mi := &file_songServices_proto_msgTypes[5]
+	mi := &file_songServices_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -317,7 +479,7 @@ func (x *ResponseSongDTO) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResponseSongDTO.ProtoReflect.Descriptor instead.
 func (*ResponseSongDTO) Descriptor() ([]byte, []int) {
-	return file_songServices_proto_rawDescGZIP(), []int{5}
+	return file_songServices_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ResponseSongDTO) GetSongObj() *Song {
@@ -352,7 +514,7 @@ type ResponseSongsDTO struct {
 
 func (x *ResponseSongsDTO) Reset() {
 	*x = ResponseSongsDTO{}
-	mi := &file_songServices_proto_msgTypes[6]
+	mi := &file_songServices_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -364,7 +526,7 @@ func (x *ResponseSongsDTO) String() string {
 func (*ResponseSongsDTO) ProtoMessage() {}
 
 func (x *ResponseSongsDTO) ProtoReflect() protoreflect.Message {
-	mi := &file_songServices_proto_msgTypes[6]
+	mi := &file_songServices_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -377,7 +539,7 @@ func (x *ResponseSongsDTO) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResponseSongsDTO.ProtoReflect.Descriptor instead.
 func (*ResponseSongsDTO) Descriptor() ([]byte, []int) {
-	return file_songServices_proto_rawDescGZIP(), []int{6}
+	return file_songServices_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ResponseSongsDTO) GetSongsObjArr() []*Song {
@@ -412,7 +574,7 @@ type ResponseGenresDTO struct {
 
 func (x *ResponseGenresDTO) Reset() {
 	*x = ResponseGenresDTO{}
-	mi := &file_songServices_proto_msgTypes[7]
+	mi := &file_songServices_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -424,7 +586,7 @@ func (x *ResponseGenresDTO) String() string {
 func (*ResponseGenresDTO) ProtoMessage() {}
 
 func (x *ResponseGenresDTO) ProtoReflect() protoreflect.Message {
-	mi := &file_songServices_proto_msgTypes[7]
+	mi := &file_songServices_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -437,7 +599,7 @@ func (x *ResponseGenresDTO) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResponseGenresDTO.ProtoReflect.Descriptor instead.
 func (*ResponseGenresDTO) Descriptor() ([]byte, []int) {
-	return file_songServices_proto_rawDescGZIP(), []int{7}
+	return file_songServices_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ResponseGenresDTO) GetGenresObjArr() []*Genre {
@@ -470,17 +632,30 @@ const file_songServices_proto_rawDesc = "" +
 	"\x13SongsByGenreRequest\x12\x1c\n" +
 	"\tgenreName\x18\x01 \x01(\tR\tgenreName\"#\n" +
 	"\vSongRequest\x12\x14\n" +
-	"\x05title\x18\x01 \x01(\tR\x05title\"+\n" +
+	"\x05title\x18\x01 \x01(\tR\x05title\"\xc3\x01\n" +
+	"\x0fSaveSongRequest\x12\x14\n" +
+	"\x05title\x18\x01 \x01(\tR\x05title\x12\x16\n" +
+	"\x06artist\x18\x02 \x01(\tR\x06artist\x12\x12\n" +
+	"\x04year\x18\x03 \x01(\tR\x04year\x12\x1a\n" +
+	"\bduration\x18\x04 \x01(\tR\bduration\x12\x1a\n" +
+	"\blanguage\x18\x05 \x01(\tR\blanguage\x12\x14\n" +
+	"\x05genre\x18\x06 \x01(\tR\x05genre\x12 \n" +
+	"\vfileContent\x18\a \x01(\fR\vfileContent\"X\n" +
+	"\x10SaveSongResponse\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\x16\n" +
+	"\x06songId\x18\x03 \x01(\tR\x06songId\"+\n" +
 	"\x05Genre\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"\x9f\x01\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"\xbb\x01\n" +
 	"\x04Song\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x16\n" +
 	"\x06artist\x18\x03 \x01(\tR\x06artist\x12\x12\n" +
-	"\x04year\x18\x04 \x01(\x05R\x04year\x12\x1a\n" +
-	"\bduration\x18\x05 \x01(\tR\bduration\x12)\n" +
-	"\x05genre\x18\x06 \x01(\v2\x13.songServices.GenreR\x05genre\"m\n" +
+	"\x04year\x18\x04 \x01(\tR\x04year\x12\x1a\n" +
+	"\bduration\x18\x05 \x01(\tR\bduration\x12\x1a\n" +
+	"\blanguage\x18\x06 \x01(\tR\blanguage\x12)\n" +
+	"\x05genre\x18\a \x01(\v2\x13.songServices.GenreR\x05genre\"m\n" +
 	"\x0fResponseSongDTO\x12,\n" +
 	"\asongObj\x18\x01 \x01(\v2\x12.songServices.SongR\asongObj\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\x05R\x04code\x12\x18\n" +
@@ -492,11 +667,12 @@ const file_songServices_proto_rawDesc = "" +
 	"\x11ResponseGenresDTO\x127\n" +
 	"\fgenresObjArr\x18\x01 \x03(\v2\x13.songServices.GenreR\fgenresObjArr\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\x05R\x04code\x12\x18\n" +
-	"\amessage\x18\x03 \x01(\tR\amessage2\xeb\x01\n" +
+	"\amessage\x18\x03 \x01(\tR\amessage2\xb6\x02\n" +
 	"\vSongService\x12A\n" +
 	"\tGetGenres\x12\x13.songServices.Empty\x1a\x1f.songServices.ResponseGenresDTO\x12T\n" +
 	"\x0fGetSongsByGenre\x12!.songServices.SongsByGenreRequest\x1a\x1e.songServices.ResponseSongsDTO\x12C\n" +
-	"\aGetSong\x12\x19.songServices.SongRequest\x1a\x1d.songServices.ResponseSongDTOB\x0fZ\r/songServicesb\x06proto3"
+	"\aGetSong\x12\x19.songServices.SongRequest\x1a\x1d.songServices.ResponseSongDTO\x12I\n" +
+	"\bSaveSong\x12\x1d.songServices.SaveSongRequest\x1a\x1e.songServices.SaveSongResponseB\x0fZ\r/songServicesb\x06proto3"
 
 var (
 	file_songServices_proto_rawDescOnce sync.Once
@@ -510,30 +686,34 @@ func file_songServices_proto_rawDescGZIP() []byte {
 	return file_songServices_proto_rawDescData
 }
 
-var file_songServices_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_songServices_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_songServices_proto_goTypes = []any{
 	(*Empty)(nil),               // 0: songServices.Empty
 	(*SongsByGenreRequest)(nil), // 1: songServices.SongsByGenreRequest
 	(*SongRequest)(nil),         // 2: songServices.SongRequest
-	(*Genre)(nil),               // 3: songServices.Genre
-	(*Song)(nil),                // 4: songServices.Song
-	(*ResponseSongDTO)(nil),     // 5: songServices.ResponseSongDTO
-	(*ResponseSongsDTO)(nil),    // 6: songServices.ResponseSongsDTO
-	(*ResponseGenresDTO)(nil),   // 7: songServices.ResponseGenresDTO
+	(*SaveSongRequest)(nil),     // 3: songServices.SaveSongRequest
+	(*SaveSongResponse)(nil),    // 4: songServices.SaveSongResponse
+	(*Genre)(nil),               // 5: songServices.Genre
+	(*Song)(nil),                // 6: songServices.Song
+	(*ResponseSongDTO)(nil),     // 7: songServices.ResponseSongDTO
+	(*ResponseSongsDTO)(nil),    // 8: songServices.ResponseSongsDTO
+	(*ResponseGenresDTO)(nil),   // 9: songServices.ResponseGenresDTO
 }
 var file_songServices_proto_depIdxs = []int32{
-	3, // 0: songServices.Song.genre:type_name -> songServices.Genre
-	4, // 1: songServices.ResponseSongDTO.songObj:type_name -> songServices.Song
-	4, // 2: songServices.ResponseSongsDTO.songsObjArr:type_name -> songServices.Song
-	3, // 3: songServices.ResponseGenresDTO.genresObjArr:type_name -> songServices.Genre
+	5, // 0: songServices.Song.genre:type_name -> songServices.Genre
+	6, // 1: songServices.ResponseSongDTO.songObj:type_name -> songServices.Song
+	6, // 2: songServices.ResponseSongsDTO.songsObjArr:type_name -> songServices.Song
+	5, // 3: songServices.ResponseGenresDTO.genresObjArr:type_name -> songServices.Genre
 	0, // 4: songServices.SongService.GetGenres:input_type -> songServices.Empty
 	1, // 5: songServices.SongService.GetSongsByGenre:input_type -> songServices.SongsByGenreRequest
 	2, // 6: songServices.SongService.GetSong:input_type -> songServices.SongRequest
-	7, // 7: songServices.SongService.GetGenres:output_type -> songServices.ResponseGenresDTO
-	6, // 8: songServices.SongService.GetSongsByGenre:output_type -> songServices.ResponseSongsDTO
-	5, // 9: songServices.SongService.GetSong:output_type -> songServices.ResponseSongDTO
-	7, // [7:10] is the sub-list for method output_type
-	4, // [4:7] is the sub-list for method input_type
+	3, // 7: songServices.SongService.SaveSong:input_type -> songServices.SaveSongRequest
+	9, // 8: songServices.SongService.GetGenres:output_type -> songServices.ResponseGenresDTO
+	8, // 9: songServices.SongService.GetSongsByGenre:output_type -> songServices.ResponseSongsDTO
+	7, // 10: songServices.SongService.GetSong:output_type -> songServices.ResponseSongDTO
+	4, // 11: songServices.SongService.SaveSong:output_type -> songServices.SaveSongResponse
+	8, // [8:12] is the sub-list for method output_type
+	4, // [4:8] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name
 	4, // [4:4] is the sub-list for extension extendee
 	0, // [0:4] is the sub-list for field type_name
@@ -550,7 +730,7 @@ func file_songServices_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_songServices_proto_rawDesc), len(file_songServices_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

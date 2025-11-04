@@ -9,7 +9,8 @@ type Song struct {
 	ID       int32
 	TITLE    string
 	ARTIST   string
-	YEAR     int32
+	YEAR     string
 	DURATION string
+	LANGUAGE string
 	GENRE    Genre
 }
