@@ -56,21 +56,24 @@ func initializeConnections() {
 	songClient = songServices.NewSongServiceClient(songConn)
 
 	// Conexión al servidor de streaming
-	streamingConn, err = grpc.Dial("localhost:50051", grpc.WithInsecure())
+	conexionStreaming := "localhost:50051"
+	streamingConn, err = grpc.Dial(conexionStreaming, grpc.WithInsecure())
 	if err != nil {
 		fmt.Printf("Error conectando a servidor de streaming: %v\n", err)
 		return
 	}
 	streamingClient = streamingServices.NewAudioServiceClient(streamingConn)
+	fmt.Printf("-> Conectado a servidor de streaming en %s\n", conexionStreaming)
 
 	// Conexión al servidor de preferencias
-	preferenciasConn, err = grpc.Dial("localhost:50052", grpc.WithInsecure())
+	conexionPreferencias := "localhost:50052"
+	preferenciasConn, err = grpc.Dial(conexionPreferencias, grpc.WithInsecure())
 	if err != nil {
 		fmt.Printf("Error conectando a servidor de preferencias: %v\n", err)
 		return
 	}
 	preferenciasClient = pb.NewPreferenciasServiceClient(preferenciasConn)
-	fmt.Println("✓ Conectado a servidor de preferencias en localhost:50052")
+	fmt.Printf("-> Conectado a servidor de preferencias en %s", conexionPreferencias)
 }
 
 func closeConnections() {
@@ -187,13 +190,12 @@ func obtenerPreferencias(nombreUsuario string) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 
-	fmt.Printf("\n🔄 Obteniendo preferencias para: %s...\n", nombreUsuario)
 	response, err := preferenciasClient.ObtenerPreferenciasUsuario(ctx, &pb.PreferenciaRequest{
 		NombreUsuario: nombreUsuario,
 	})
 
 	if err != nil {
-		fmt.Printf("❌ Error obteniendo preferencias: %v\n", err)
+		fmt.Printf("Error obteniendo preferencias: %v\n", err)
 		return
 	}
 
@@ -207,7 +209,7 @@ func mostrarPreferenciasFormato(preferencias *pb.PreferenciaResponse) {
 	fmt.Println(strings.Repeat("=", 60))
 
 	// Géneros favoritos
-	fmt.Println("\n📀 GÉNEROS FAVORITOS:")
+	fmt.Println("\n GÉNEROS FAVORITOS:")
 	fmt.Println(strings.Repeat("-", 58))
 	if len(preferencias.PreferenciasGeneros) == 0 {
 		fmt.Println(" Sin datos de géneros")
@@ -222,7 +224,7 @@ func mostrarPreferenciasFormato(preferencias *pb.PreferenciaResponse) {
 	}
 
 	// Artistas favoritos
-	fmt.Println("\n🎤 ARTISTAS FAVORITOS:")
+	fmt.Println("\n ARTISTAS FAVORITOS:")
 	fmt.Println(strings.Repeat("-", 58))
 	if len(preferencias.PreferenciasArtistas) == 0 {
 		fmt.Println(" Sin datos de artistas")
@@ -236,8 +238,8 @@ func mostrarPreferenciasFormato(preferencias *pb.PreferenciaResponse) {
 		}
 	}
 
-	// NUEVO: Idiomas favoritos
-	fmt.Println("\n🌐 IDIOMAS FAVORITOS:")
+	// Idiomas favoritos
+	fmt.Println("\n IDIOMAS FAVORITOS:")
 	fmt.Println(strings.Repeat("-", 58))
 	if len(preferencias.PreferenciasIdiomas) == 0 {
 		fmt.Println(" Sin datos de idiomas")

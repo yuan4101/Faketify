@@ -3,24 +3,24 @@ package controlador
 import (
 	"encoding/json"
 	"fmt"
+	dtos "localServer/grpc-playbackServer/capaFachadaServices/DTOs"
+	capafachada "localServer/grpc-playbackServer/capaFachadaServices/fachada"
 	"net/http"
-	dtos "tendencias/capaFachadaServices/DTOs"
-	capafachada "tendencias/capaFachadaServices/fachada"
 )
 
-type ControladorTendencias struct {
-	fachada *capafachada.FachadaTendencias
+type ControladorReproducciones struct {
+	fachada *capafachada.FachadaReproducciones
 }
 
 // Constructor del Controlador
-func NuevoControladorTendencias() *ControladorTendencias {
-	return &ControladorTendencias{
-		fachada: capafachada.NuevaFachadaTendencias(),
+func NuevoControladorReproducciones() *ControladorReproducciones {
+	return &ControladorReproducciones{
+		fachada: capafachada.NuevaFachadaReproducciones(),
 	}
 }
 
 // Servicio REST POST que recibe una reproducción en formato JSON
-func (c *ControladorTendencias) RegistrarReproduccionHandler(w http.ResponseWriter, r *http.Request) {
+func (c *ControladorReproducciones) RegistrarReproduccionHandler(w http.ResponseWriter, r *http.Request) {
 	var dto dtos.ReproduccionDTOInput
 
 	if err := json.NewDecoder(r.Body).Decode(&dto); err != nil {
@@ -34,8 +34,8 @@ func (c *ControladorTendencias) RegistrarReproduccionHandler(w http.ResponseWrit
 	fmt.Fprintf(w, "Reproducción registrada correctamente")
 }
 
-// SErvicio REST GET que devuelve todas las reproducciones en formato JSON
-func (c *ControladorTendencias) ListarReproduccionesHandler(w http.ResponseWriter, r *http.Request) {
+// Servicio REST GET que devuelve todas las reproducciones en formato JSON
+func (c *ControladorReproducciones) ListarReproduccionesHandler(w http.ResponseWriter, r *http.Request) {
 	repros := c.fachada.ObtenerReproducciones()
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(repros)

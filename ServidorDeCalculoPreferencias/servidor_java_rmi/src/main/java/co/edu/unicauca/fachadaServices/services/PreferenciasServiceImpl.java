@@ -2,25 +2,25 @@ package co.edu.unicauca.fachadaServices.services;
 
 import java.util.List;
 import co.edu.unicauca.fachadaServices.DTO.PreferenciasDTORespuesta;
-import co.edu.unicauca.fachadaServices.DTO.ReproduccionesRealesDTOEntrada;
-import co.edu.unicauca.fachadaServices.services.componenteCalculaPreferencias.CalculadorPreferenciasV2;
+import co.edu.unicauca.fachadaServices.DTO.ReproduccionesDTOEntrada;
+import co.edu.unicauca.fachadaServices.services.componenteCalculaPreferencias.CalculadorPreferencias;
 import co.edu.unicauca.fachadaServices.services.componenteComunicacionServidorReproducciones.ComunicacionServidorReproducciones;
 
 public class PreferenciasServiceImpl implements IPreferenciasService {
 
     private ComunicacionServidorReproducciones comunicacionServidorReproducciones;
-    private CalculadorPreferenciasV2 calculadorPreferencias;
+    private CalculadorPreferencias calculadorPreferencias;
 
     public PreferenciasServiceImpl() {
         this.comunicacionServidorReproducciones = new ComunicacionServidorReproducciones();
-        this.calculadorPreferencias = new CalculadorPreferenciasV2();
+        this.calculadorPreferencias = new CalculadorPreferencias();
     }
 
     @Override
     public PreferenciasDTORespuesta getPreferenciasUsuario(String nombreUsuario) {
         try {
             // Obtener todas las reproducciones
-            List<ReproduccionesRealesDTOEntrada> reproducciones = 
+            List<ReproduccionesDTOEntrada> reproducciones = 
                 comunicacionServidorReproducciones.obtenerReproduccionesRemotas();
             
             if (reproducciones == null || reproducciones.isEmpty()) {

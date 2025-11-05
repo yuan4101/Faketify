@@ -3,6 +3,7 @@ package componnteconexioncola
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 
 	"github.com/streadway/amqp"
 )
@@ -75,7 +76,7 @@ func (p *RabbitPublisher) PublicarNotificacion(msg NotificacionCancion) error {
 		return fmt.Errorf("error publicando mensaje: %v", err)
 	}
 
-	fmt.Println("Notificación enviada a RabbitMQ:", string(body))
+	log.Print("- PUBLISH RabbitMQ:", string(body))
 	return nil
 }
 

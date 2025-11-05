@@ -8,24 +8,21 @@ import (
 	"net"
 	"net/http"
 
-	models "localServer/grpc-songsServer/Models"
-	services "localServer/grpc-songsServer/Services"
+	dto "localServer/grpc-songsServer/capaFachadaServices/DTO"
+	services "localServer/grpc-songsServer/capaFachadaServices/services"
 	"localServer/grpc-songsServer/songServices"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/peer"
 )
 
-var songsArr []models.Song
-var genresArr []models.Genre
+var songsArr []dto.Song
+var genresArr []dto.Genre
 
 type songsServer struct {
 	songServices.UnimplementedSongServiceServer
 }
 
-// GetSong implementa el servicio gRPC para buscar una canción por título.
-// Recibe una solicitud con el título y retorna los metadatos de la canción.
-// Loggea la consulta del cliente y convierte la respuesta al formato gRPC.
 func (s *songsServer) GetSong(ctx context.Context, req *songServices.SongRequest) (*songServices.ResponseSongDTO, error) {
 	title := req.GetTitle()
 
@@ -55,9 +52,6 @@ func (s *songsServer) GetSong(ctx context.Context, req *songServices.SongRequest
 	return &response, nil
 }
 
-// GetGenres implementa el servicio gRPC para obtener todos los géneros musicales.
-// Retorna la lista completa de géneros en formato protobuf.
-// Loggea la consulta del cliente y convierte los datos al formato gRPC.
 func (s *songsServer) GetGenres(ctx context.Context, req *songServices.Empty) (*songServices.ResponseGenresDTO, error) {
 	resp := services.GetGenres(genresArr)
 
@@ -81,9 +75,6 @@ func (s *songsServer) GetGenres(ctx context.Context, req *songServices.Empty) (*
 	return &response, nil
 }
 
-// GetSongsByGenre implementa el servicio gRPC para obtener canciones por género.
-// Filtra el catálogo por nombre de género y retorna las canciones correspondientes.
-// Convierte los resultados al formato protobuf y loggea la consulta del cliente.
 func (s *songsServer) GetSongsByGenre(ctx context.Context, req *songServices.SongsByGenreRequest) (*songServices.ResponseSongsDTO, error) {
 	genre := req.GetGenreName()
 
@@ -116,14 +107,12 @@ func (s *songsServer) GetSongsByGenre(ctx context.Context, req *songServices.Son
 	return &response, nil
 }
 
-// SaveSong implementa el servicio gRPC para guardar una canción
 func (s *songsServer) SaveSong(ctx context.Context, req *songServices.SaveSongRequest) (*songServices.SaveSongResponse, error) {
 	if p, ok := peer.FromContext(ctx); ok {
 		log.Printf("| CLIENT: %s | SAVING: %s by %s", p.Addr.String(), req.Title, req.Artist)
 	}
 
-	// Crear DTO de entrada
-	cancionDTO := &models.CancionAlmacenarDTOInput{
+	cancionDTO := &dto.CancionAlmacenarDTOInput{
 		Titulo:   req.Title,
 		Artista:  req.Artist,
 		Año:      req.Year,
@@ -132,7 +121,6 @@ func (s *songsServer) SaveSong(ctx context.Context, req *songServices.SaveSongRe
 		Genero:   req.Genre,
 	}
 
-	// Guardar archivo Y agregar a songsArr
 	songID := services.SaveSongFile(req.FileContent, cancionDTO, &songsArr, genresArr)
 
 	response := &songServices.SaveSongResponse{
@@ -145,30 +133,28 @@ func (s *songsServer) SaveSong(ctx context.Context, req *songServices.SaveSongRe
 }
 
 func main() {
-	listener, err := net.Listen("tcp", ":50053")
+	puerto := ":50053"
+	listener, err := net.Listen("tcp", puerto)
 	if err != nil {
-		log.Fatalf("Failed to open port 50053: %v", err)
+		log.Fatalf("Failed to open port %s: %v", puerto, err)
 	}
 
-	// ✅ Cargar metadatos de canciones PRIMERO
 	services.LoadSongsMetadata(&songsArr, &genresArr)
 
 	go func() {
-		// ✅ Pasar los arrays al controlador
 		ctrl := controlador.NuevoControladorAlmacenamientoCanciones(&songsArr, genresArr)
 		http.HandleFunc("/canciones/almacenamiento", ctrl.AlmacenarAudioCancion)
-		fmt.Println("✅ Servicio de Almacenamiento escuchando en el puerto 5001...")
-		if err := http.ListenAndServe(":5001", nil); err != nil {
+		puerto := ":5001"
+		fmt.Printf("-> Servicio de Almacenamiento escuchando en el puerto %s\n", puerto)
+		if err := http.ListenAndServe(puerto, nil); err != nil {
 			fmt.Println("Error iniciando el servidor:", err)
 		}
 	}()
 
-	// Crear servidor gRPC
 	grpcServer := grpc.NewServer()
 	songServices.RegisterSongServiceServer(grpcServer, &songsServer{})
 
-	// Iniciar el servidor
-	log.Println("Songs gRPC server listening on port 50053")
+	log.Printf("\n\t\t----- SERVIDOR DE CANCIONES (Go/gRPC) [%s] -----\n", puerto)
 	if err := grpcServer.Serve(listener); err != nil {
 		log.Fatalf("Failed to start gRPC server: %v", err)
 	}

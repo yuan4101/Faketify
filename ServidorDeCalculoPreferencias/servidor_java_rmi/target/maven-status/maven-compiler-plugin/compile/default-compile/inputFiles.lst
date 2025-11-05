@@ -8,7 +8,6 @@
 /home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/servidor_java_rmi/src/main/java/co/edu/unicauca/main/Main.java
 /home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/servidor_java_rmi/src/main/java/co/edu/unicauca/fachadaServices/services/componenteComunicacionServidorReproducciones/ComunicacionServidorReproducciones.java
 /home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/servidor_java_rmi/src/main/java/co/edu/unicauca/configuracion/lector/LectorPropiedadesConfig.java
-/home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/servidor_java_rmi/src/main/java/co/edu/unicauca/fachadaServices/services/componenteCalculaPreferencias/CalculadorPreferencias.java
 /home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/servidor_java_rmi/src/main/java/co/edu/unicauca/fachadaServices/DTO/PreferenciaGeneroDTORespuesta.java
 /home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/servidor_java_rmi/src/main/java/co/edu/unicauca/fachadaServices/services/componenteComunicacionServidorReproducciones/ReproduccionesRemoteClient.java
 /home/juan/Code/labSD/Faketify/ServidorDeCalculoPreferencias/servidor_java_rmi/src/main/java/co/edu/unicauca/fachadaServices/DTO/PreferenciaIdiomaDTORespuesta.java

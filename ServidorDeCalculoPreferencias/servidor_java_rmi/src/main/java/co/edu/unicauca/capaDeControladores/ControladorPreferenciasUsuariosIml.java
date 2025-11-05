@@ -19,7 +19,7 @@ public class ControladorPreferenciasUsuariosIml extends UnicastRemoteObject
 
     @Override
     public PreferenciasDTORespuesta getPreferenciasUsuario(String nombreUsuario) throws RemoteException {
-        System.out.println("RMI: Solicitud de preferencias para usuario: " + nombreUsuario);
+        System.out.println("\nRMI: Solicitud de preferencias para usuario: " + nombreUsuario);
         return this.servicioFachadaPreferencias.getPreferenciasUsuario(nombreUsuario);
     }
 }

@@ -92,7 +92,7 @@ func (mc *Controller) Start() {
 	}
 }
 
-// ========== NUEVO LOGIN CON USUARIO Y CONTRASEÑA ==========
+// ========== LOGIN CON USUARIO Y CONTRASEÑA ==========
 
 func (mc *Controller) handleLogin() {
 	util.ColorStringPrint("\n\t Faketify \t\n", "green", true)
@@ -101,24 +101,24 @@ func (mc *Controller) handleLogin() {
 	// Pedir usuario
 	username := util.Read("Usuario: ")
 	if username == "" {
-		util.ColorStringPrint("❌ Usuario vacío\n", "red", false)
+		util.ColorStringPrint("-> Usuario vacío\n", "red", false)
 		return
 	}
 
 	// Pedir contraseña
 	password := util.Read("Contraseña: ")
 	if password == "" {
-		util.ColorStringPrint("❌ Contraseña vacía\n", "red", false)
+		util.ColorStringPrint("-> Contraseña vacía\n", "red", false)
 		return
 	}
 
 	// Validar credenciales
 	if mc.validateCredentials(username, password) {
 		mc.handler.UserID = username
-		util.ColorStringPrint(fmt.Sprintf("\n✓ Bienvenido, %s\n", mc.handler.UserID), "green", true)
+		util.ColorStringPrint(fmt.Sprintf("\n-> Bienvenido, %s\n", mc.handler.UserID), "green", true)
 		mc.state = StateMainMenu
 	} else {
-		util.ColorStringPrint("❌ Usuario o contraseña incorrectos\n", "red", false)
+		util.ColorStringPrint("-> Usuario o contraseña incorrectos\n", "red", false)
 	}
 }
 
@@ -154,11 +154,11 @@ func (mc *Controller) handleMainMenu() {
 	case "2":
 		mc.state = StatePreferences
 	case "3":
-		util.ColorStringPrint(fmt.Sprintf("\n👋 Sesión cerrada para %s\n", mc.handler.UserID), "yellow", false)
+		util.ColorStringPrint(fmt.Sprintf("\n-> Sesión cerrada para %s\n", mc.handler.UserID), "yellow", false)
 		mc.handler.UserID = ""
 		mc.state = StateLogin
 	default:
-		util.ColorStringPrint("❌ Opción no válida\n", "red", false)
+		util.ColorStringPrint("-> Opción no válida\n", "red", false)
 	}
 }
 
@@ -168,7 +168,7 @@ func (mc *Controller) handleGenres() {
 	genres := mc.GetGenresFn()
 
 	if len(genres.GenresObjArr) == 0 {
-		util.ColorStringPrint("❌ No hay géneros disponibles\n", "red", false)
+		util.ColorStringPrint("-> No hay géneros disponibles\n", "red", false)
 		mc.state = StateMainMenu
 		return
 	}
@@ -192,7 +192,7 @@ func (mc *Controller) handleGenres() {
 
 	genreIdx, err := strconv.Atoi(option)
 	if err != nil {
-		util.ColorStringPrint("❌ Opción no válida\n", "red", false)
+		util.ColorStringPrint("-> Opción no válida\n", "red", false)
 		return
 	}
 
@@ -205,10 +205,10 @@ func (mc *Controller) handleGenres() {
 	// Seleccionar género
 	if genreIdx > 0 && genreIdx <= len(genres.GenresObjArr) {
 		mc.handler.CurrentGenre = genres.GenresObjArr[genreIdx-1].GetName()
-		util.ColorStringPrint(fmt.Sprintf("\n✓ Seleccionado: %s\n", mc.handler.CurrentGenre), "green", true)
+		util.ColorStringPrint(fmt.Sprintf("\n-> Seleccionado: %s\n", mc.handler.CurrentGenre), "green", true)
 		mc.state = StateSongs
 	} else {
-		util.ColorStringPrint("❌ Opción no válida\n", "red", false)
+		util.ColorStringPrint("-> Opción no válida\n", "red", false)
 	}
 }
 
@@ -218,7 +218,7 @@ func (mc *Controller) handleSongs() {
 	songs := mc.GetSongsByGenreFn(mc.handler.CurrentGenre)
 
 	if len(songs.SongsObjArr) == 0 {
-		util.ColorStringPrint(fmt.Sprintf("❌ No hay canciones para: %s\n", mc.handler.CurrentGenre), "red", false)
+		util.ColorStringPrint(fmt.Sprintf("-> No hay canciones para: %s\n", mc.handler.CurrentGenre), "red", false)
 		mc.state = StateGenres
 		return
 	}
@@ -242,7 +242,7 @@ func (mc *Controller) handleSongs() {
 
 	songIdx, err := strconv.Atoi(option)
 	if err != nil {
-		util.ColorStringPrint("❌ Opción no válida\n", "red", false)
+		util.ColorStringPrint("-> Opción no válida\n", "red", false)
 		return
 	}
 
@@ -256,14 +256,14 @@ func (mc *Controller) handleSongs() {
 	if songIdx > 0 && songIdx <= len(songs.SongsObjArr) {
 		song := mc.GetSongFn(songs.SongsObjArr[songIdx-1].GetTitle())
 		if song == nil {
-			util.ColorStringPrint("❌ No se pudo cargar la canción\n", "red", false)
+			util.ColorStringPrint("-> No se pudo cargar la canción\n", "red", false)
 			return
 		}
 		mc.handler.CurrentSong = song
 		util.ColorStringPrint(fmt.Sprintf("\n✓ Canción: %s\n", song.SongObj.Title), "green", true)
 		mc.state = StateSongDetail
 	} else {
-		util.ColorStringPrint("❌ Opción no válida\n", "red", false)
+		util.ColorStringPrint("-> Opción no válida\n", "red", false)
 	}
 }
 
@@ -271,16 +271,16 @@ func (mc *Controller) handleSongs() {
 
 func (mc *Controller) handleSongDetail() {
 	util.ColorStringPrint("\n--- DETALLES DE CANCIÓN ---\n", "blue", true)
-	util.ColorStringPrint("🎵 Título: ", "green", false)
+	util.ColorStringPrint("-> Título: ", "green", false)
 	fmt.Println(mc.handler.CurrentSong.SongObj.Title)
-	util.ColorStringPrint("🎤 Artista: ", "green", false)
+	util.ColorStringPrint("-> Artista: ", "green", false)
 	fmt.Println(mc.handler.CurrentSong.SongObj.Artist)
-	util.ColorStringPrint("🎸 Género: ", "green", false)
+	util.ColorStringPrint("-> Género: ", "green", false)
 	fmt.Println(mc.handler.CurrentSong.SongObj.Genre.GetName())
-	util.ColorStringPrint(" Año: ", "green", false)
+	util.ColorStringPrint("-> Año: ", "green", false)
 	fmt.Println(mc.handler.CurrentSong.SongObj.Year)
-	util.ColorStringPrint("🌐 Idioma: ", "green", false)  // ← NUEVO
-	fmt.Println(mc.handler.CurrentSong.SongObj.Language) // ← NUEVO
+	util.ColorStringPrint("-> Idioma: ", "green", false)
+	fmt.Println(mc.handler.CurrentSong.SongObj.Language)
 	util.ColorStringPrint(" Duracion: ", "green", false)
 	fmt.Println(mc.handler.CurrentSong.SongObj.Duration)
 
@@ -296,23 +296,23 @@ func (mc *Controller) handleSongDetail() {
 	case "2":
 		mc.state = StateSongs
 	default:
-		util.ColorStringPrint("❌ Opción no válida\n", "red", false)
+		util.ColorStringPrint("-> Opción no válida\n", "red", false)
 	}
 }
 
 // ========== REPRODUCCIÓN ==========
 
 func (mc *Controller) handlePlaying() {
-	util.ColorStringPrint("\n🎶 Iniciando reproducción...\n", "green", false)
+	util.ColorStringPrint("\n-> Iniciando reproducción...\n", "green", false)
 
 	// Pasar el usuario dinámicamente a la función de streaming
 	success := mc.GetStreamingSongFn(mc.handler.UserID, mc.handler.CurrentSong)
 
 	if success {
-		util.ColorStringPrint("\n✓ Reproducción completada\n", "green", false)
+		util.ColorStringPrint("\n-> Reproducción completada\n", "green", false)
 		mc.state = StateSongDetail
 	} else {
-		util.ColorStringPrint("\n❌ Error en la reproducción\n", "red", false)
+		util.ColorStringPrint("\n-> Error en la reproducción\n", "red", false)
 		mc.state = StateSongs
 	}
 }
@@ -322,7 +322,7 @@ func (mc *Controller) handlePlaying() {
 func (mc *Controller) handlePreferences() {
 	util.ColorStringPrint("\n--- PREFERENCIAS DE USUARIO ---\n", "blue", true)
 
-	util.ColorStringPrint(fmt.Sprintf("\n🔄 Obteniendo preferencias para: %s...\n", mc.handler.UserID), "green", false)
+	util.ColorStringPrint(fmt.Sprintf("\n-> Obteniendo preferencias para: %s...\n", mc.handler.UserID), "green", false)
 	mc.GetPreferencesFn(mc.handler.UserID)
 
 	mc.state = StateMainMenu

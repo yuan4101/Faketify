@@ -4,7 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import co.edu.unicauca.fachadaServices.DTO.PreferenciasDTORespuesta;
 
-//Hereda de la clase remore, lo cual lo convierte en interfaz remota
+//Hereda de la clase remote, lo cual lo convierte en interfaz remota
 public interface ControladorPreferenciasUsuariosInt extends Remote {
     //Definicion primer metodo remoto
     public PreferenciasDTORespuesta getPreferenciasUsuario(String id) throws RemoteException;

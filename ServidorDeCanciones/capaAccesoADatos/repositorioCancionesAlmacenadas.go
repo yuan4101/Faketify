@@ -2,6 +2,7 @@ package capaaccesoadatos
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"sync"
@@ -28,25 +29,21 @@ func (r *RepositorioCanciones) GuardarCancion(titulo string, genero string, arti
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	// Ruta relativa: desde Views sube 3 niveles hasta Faketify
-	repoPath := "../../RepositorioCanciones" // ← CAMBIO: 3 niveles hacia arriba
+	repoPath := "../../RepositorioCanciones"
 
-	// Crear carpeta si no existe
 	err := os.MkdirAll(repoPath, os.ModePerm)
 	if err != nil {
 		return fmt.Errorf("error creando carpeta: %v", err)
 	}
 
-	// Construir nombre del archivo
 	fileName := fmt.Sprintf("%s_%s_%s.mp3", titulo, genero, artista)
 	filePath := filepath.Join(repoPath, fileName)
 
-	// Guardar archivo físico
 	err = os.WriteFile(filePath, data, 0644)
 	if err != nil {
 		return fmt.Errorf("error guardando archivo: %v", err)
 	}
 
-	fmt.Printf("✅ Canción guardada en: %s\n", filePath)
+	log.Printf("- SAVE: '%s - %s' en '%s'", titulo, artista, filePath)
 	return nil
 }

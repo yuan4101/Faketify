@@ -1,78 +1,87 @@
 package co.edu.unicauca.fachadaServices.services.componenteCalculaPreferencias;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import co.edu.unicauca.fachadaServices.DTO.CancionDTOEntrada;
-import co.edu.unicauca.fachadaServices.DTO.PreferenciaArtistaDTORespuesta;
-import co.edu.unicauca.fachadaServices.DTO.PreferenciaGeneroDTORespuesta;
 import co.edu.unicauca.fachadaServices.DTO.PreferenciasDTORespuesta;
 import co.edu.unicauca.fachadaServices.DTO.ReproduccionesDTOEntrada;
 
 public class CalculadorPreferencias {
 
-    
-    public PreferenciasDTORespuesta calcular(Integer idUsuario,
-                                              List<CancionDTOEntrada> canciones,
-                                              List<ReproduccionesDTOEntrada> reproducciones) {
-        Map<Integer, CancionDTOEntrada> mapaCanciones = canciones.stream()
+    public PreferenciasDTORespuesta calcular(String nombreUsuario,
+            List<ReproduccionesDTOEntrada> reproducciones) {
+
+        List<ReproduccionesDTOEntrada> reproduccionesUsuario = reproducciones.stream()
             .filter(Objects::nonNull)
-            .filter(c -> c.getId() != null)
-            .collect(Collectors.toMap(CancionDTOEntrada::getId, c -> c, (a,b) -> a));
-       
-        
-        Map<String, Integer> contadorGeneros = new HashMap<>();
-        Map<String, Integer> contadorArtistas = new HashMap<>();
-
-        for (ReproduccionesDTOEntrada r : reproducciones) {
-            Integer idCancion = r.getIdCancion();
-            if (idCancion == null) continue;
-
-            CancionDTOEntrada c = mapaCanciones.get(idCancion);
-            if (c == null) {               
-                continue;
-            }
-
-            String genero = c.getGenero() == null ? "Desconocido" : c.getGenero();
-            String artista = c.getArtista() == null ? "Desconocido" : c.getArtista();
-
-            contadorGeneros.put(genero, contadorGeneros.getOrDefault(genero, 0) + 1);
-            contadorArtistas.put(artista, contadorArtistas.getOrDefault(artista, 0) + 1);
-        }
-
-        
-        List<PreferenciaGeneroDTORespuesta> preferenciasGeneros = contadorGeneros.entrySet().stream()
-            .map(e -> {
-                PreferenciaGeneroDTORespuesta dto = new PreferenciaGeneroDTORespuesta();
-                dto.setNombreGenero(e.getKey());
-                dto.setNumeroPreferencias(e.getValue());
-                return dto;
-            })
-            .sorted(Comparator.comparingInt(PreferenciaGeneroDTORespuesta::getNumeroPreferencias).reversed()
-                    .thenComparing(PreferenciaGeneroDTORespuesta::getNombreGenero))
+            .filter(r -> r.getUsuario() != null && r.getUsuario().equals(nombreUsuario))
             .collect(Collectors.toList());
 
-        List<PreferenciaArtistaDTORespuesta> preferenciasArtistas = contadorArtistas.entrySet().stream()
-            .map(e -> {
-                PreferenciaArtistaDTORespuesta dto = new PreferenciaArtistaDTORespuesta();
-                dto.setNombreArtista(e.getKey());
-                dto.setNumeroPreferencias(e.getValue());
-                return dto;
-            })
-            .sorted(Comparator.comparingInt(PreferenciaArtistaDTORespuesta::getNumeroPreferencias).reversed()
-                    .thenComparing(PreferenciaArtistaDTORespuesta::getNombreArtista))
-            .collect(Collectors.toList());
+        System.out.println("  - Reproducciones filtradas para " + nombreUsuario + ": " + 
+            reproduccionesUsuario.size());
 
+        Map<String, Integer> contadorGeneros = contarGeneros(reproduccionesUsuario);
+        Map<String, Integer> contadorArtistas = contarArtistas(reproduccionesUsuario);
+        Map<String, Integer> contadorIdiomas = contarIdiomas(reproduccionesUsuario);
+
+        System.out.println("  - Contadores: Géneros: " + contadorGeneros.size() + 
+            ", Artistas: " + contadorArtistas.size() + 
+            ", Idiomas: " + contadorIdiomas.size());
+
+        String idUsuario = obtenerIdUsuario(reproducciones, nombreUsuario);
+
+        return PreferenciasMapper.construirRespuesta(
+            idUsuario,
+            contadorGeneros,
+            contadorArtistas,
+            contadorIdiomas
+        );
+    }
+
+    private Map<String, Integer> contarGeneros(
+            List<ReproduccionesDTOEntrada> reproducciones) {
         
-        PreferenciasDTORespuesta respuesta = new PreferenciasDTORespuesta();
-        respuesta.setIdUsuario(idUsuario);
-        respuesta.setPreferenciasGeneros(preferenciasGeneros);
-        respuesta.setPreferenciasArtistas(preferenciasArtistas);
+        Map<String, Integer> contador = new HashMap<>();
+        reproducciones.forEach(r -> {
+            String genero = r.getGenero() != null ? r.getGenero() : "Desconocido";
+            contador.put(genero, contador.getOrDefault(genero, 0) + 1);
+        });
+        return contador;
+    }
 
-        return respuesta; 
+    private Map<String, Integer> contarArtistas(
+            List<ReproduccionesDTOEntrada> reproducciones) {
+        
+        Map<String, Integer> contador = new HashMap<>();
+        reproducciones.forEach(r -> {
+            String artista = r.getArtista() != null ? r.getArtista() : "Desconocido";
+            contador.put(artista, contador.getOrDefault(artista, 0) + 1);
+        });
+        return contador;
+    }
+
+    private Map<String, Integer> contarIdiomas(
+            List<ReproduccionesDTOEntrada> reproducciones) {
+        
+        Map<String, Integer> contador = new HashMap<>();
+        reproducciones.forEach(r -> {
+            String idioma = r.getIdioma() != null ? r.getIdioma() : "Desconocido";
+            contador.put(idioma, contador.getOrDefault(idioma, 0) + 1);
+        });
+        return contador;
+    }
+
+    private String obtenerIdUsuario(
+            List<ReproduccionesDTOEntrada> reproducciones,
+            String nombreUsuario) {
+        
+        return reproducciones.stream()
+            .filter(Objects::nonNull)
+            .filter(r -> r.getUsuario() != null && r.getUsuario().equals(nombreUsuario))
+            .findFirst()
+            .map(r -> String.valueOf(r.getUsuario().hashCode()))
+            .orElse("0");
     }
 }

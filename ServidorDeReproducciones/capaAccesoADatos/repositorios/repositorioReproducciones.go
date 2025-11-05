@@ -1,15 +1,15 @@
 package capaaccesoadatos
 
 import (
-	"fmt"
+	"localServer/grpc-playbackServer/capaAccesoADatos/entitys"
+	"log"
 	"sync"
-	. "tendencias/capaAccesoADatos/entitys"
 	"time"
 )
 
 type RepositorioReproducciones struct {
 	mu             sync.Mutex
-	reproducciones []ReproduccionEntity
+	reproducciones []entitys.ReproduccionEntity
 }
 
 // Instancia única del repositorio (patrón SIngleton)
@@ -30,7 +30,7 @@ func (r *RepositorioReproducciones) AgregarReproduccion(usuario, genero, artista
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	reproduccion := ReproduccionEntity{
+	reproduccion := entitys.ReproduccionEntity{
 		Usuario:   usuario,
 		Genero:    genero,
 		Artista:   artista,
@@ -41,23 +41,10 @@ func (r *RepositorioReproducciones) AgregarReproduccion(usuario, genero, artista
 	}
 
 	r.reproducciones = append(r.reproducciones, reproduccion)
-	fmt.Printf("Reproducción almacenada: %+v\n", reproduccion)
-	r.mostrarReproducciones()
+	log.Printf("- CLIENT: %s | POST: %s - %s | USER: %s\n", cliente, titulo, artista, usuario)
 }
 
-func (r *RepositorioReproducciones) ListarReproducciones() []ReproduccionEntity {
+func (r *RepositorioReproducciones) ListarReproducciones() []entitys.ReproduccionEntity {
+	log.Printf("- GET: Listar Reproducciones\n")
 	return r.reproducciones
-}
-
-func (r *RepositorioReproducciones) mostrarReproducciones() {
-	fmt.Println("=== Reproducciones almacenadas ===")
-	for i := 0; i < len(r.reproducciones); i++ {
-		fmt.Println("Usuario: " + r.reproducciones[i].Usuario)
-		fmt.Println("Genero: " + r.reproducciones[i].Genero)
-		fmt.Println("Artista: " + r.reproducciones[i].Artista)
-		fmt.Println("Titulo: " + r.reproducciones[i].Titulo)
-		fmt.Println("Cliente: " + r.reproducciones[i].Cliente)
-		fmt.Println("Idioma: " + r.reproducciones[i].Idioma)
-		fmt.Println("Fecha y Hora: " + r.reproducciones[i].FechaHora)
-	}
 }

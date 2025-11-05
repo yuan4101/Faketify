@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class PreferenciasDTORespuesta implements Serializable {
-    private Integer idUsuario;
+    private String idUsuario;
     private List<PreferenciaGeneroDTORespuesta> preferenciasGeneros;
     private List<PreferenciaArtistaDTORespuesta> preferenciasArtistas;
-    private List<PreferenciaIdiomaDTORespuesta> preferenciasIdiomas;  // ← NUEVO CAMPO
+    private List<PreferenciaIdiomaDTORespuesta> preferenciasIdiomas;
 }
