@@ -7,8 +7,7 @@ import (
 	"net"
 
 	services "localServer/grpc-streamingServer/Services"
-	comunicacionservidorpreferencias "localServer/grpc-streamingServer/capaComunicacionExterna/comunicacionservidorPreferencias"
-	"localServer/grpc-streamingServer/capalogger"
+	comunicacionServidorReproducciones "localServer/grpc-streamingServer/capaComunicacionExterna/ComunicacionServidorReproducciones"
 	"localServer/grpc-streamingServer/streamingServices"
 
 	"google.golang.org/grpc"
@@ -18,13 +17,6 @@ import (
 
 type streamingServer struct {
 	streamingServices.UnimplementedAudioServiceServer
-	logger *capalogger.Logger
-}
-
-func NewControladorServidor(logger *capalogger.Logger) *streamingServer {
-	return &streamingServer{
-		logger: logger,
-	}
 }
 
 // GetStreamingSong implementa el servicio gRPC para streaming de audio.
@@ -34,7 +26,7 @@ func (s *streamingServer) GetStreamingSong(req *streamingServices.SongRequest, s
 	var clientAddr string
 	if p, ok := peer.FromContext(stream.Context()); ok {
 		clientAddr = p.Addr.String()
-		log.Printf("-> CLIENT: %s | GET: %s ", clientAddr, req.GetTitle())
+		log.Printf("- CLIENT: %s | STREAM: %s ", clientAddr, req.GetTitle())
 	}
 
 	// NUEVO: Extraer metadata del contexto
@@ -92,23 +84,19 @@ func (s *streamingServer) GetStreamingSong(req *streamingServices.SongRequest, s
 		}
 	}
 
-	// Log de los datos recibidos (ahora decodificados) - ACTUALIZADO
-	log.Printf("📊 Datos recibidos - Usuario: %s | Género: %s | Artista: %s | Canción: %s | Idioma: %s | IP: %s",
-		userID, genre, artist, songTitle, language, clientAddr)
-
-	// Invocación a operación asincrónica que envía datos a otro proceso
+	// Registrar de manera asincrona la reproduccion en el servidor de reproducciones
 	go func() {
-		err := comunicacionservidorpreferencias.RegistrarReproduccionEnTendencias(
+		err := comunicacionServidorReproducciones.RegistrarReproduccion(
 			userID,
 			genre,
 			artist,
 			songTitle,
 			clientAddr,
-			language, // ← NUEVO: pasar idioma
+			language,
 		)
 
 		if err != nil {
-			log.Println("Error registrando tendencia:", err)
+			log.Println("Error registrando reproduccion:", err)
 		}
 	}()
 
@@ -120,7 +108,8 @@ func (s *streamingServer) GetStreamingSong(req *streamingServices.SongRequest, s
 }
 
 func main() {
-	listener, err := net.Listen("tcp", ":50051")
+	puerto := ":50051"
+	listener, err := net.Listen("tcp", puerto)
 	if err != nil {
 		log.Fatalf("Error escuchando en el puerto: %v", err)
 	}
@@ -128,9 +117,9 @@ func main() {
 	grpcServer := grpc.NewServer()
 
 	// Se registra el controlador que ofrece el procedimiento remoto
-	streamingServices.RegisterAudioServiceServer(grpcServer, NewControladorServidor(capalogger.CrearUnicaInstanciaDelLogger()))
+	streamingServices.RegisterAudioServiceServer(grpcServer, &streamingServer{})
 
-	fmt.Println("Servidor gRPC escuchando en :50051...")
+	fmt.Printf("\n\t\t----- SERVIDOR DE STREAMING (Go/gRPC) [%s] -----\n", puerto)
 
 	// Iniciar el servidor
 	if err := grpcServer.Serve(listener); err != nil {

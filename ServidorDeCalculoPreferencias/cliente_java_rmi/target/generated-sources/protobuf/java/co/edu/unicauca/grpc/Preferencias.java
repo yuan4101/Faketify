@@ -1887,10 +1887,6 @@ public final class Preferencias {
     int getNumeroPreferencias();
   }
   /**
-   * <pre>
-   * NUEVO: Mensaje para idiomas
-   * </pre>
-   *
    * Protobuf type {@code co.edu.unicauca.grpc.Idioma}
    */
   public static final class Idioma extends
@@ -2196,10 +2192,6 @@ public final class Preferencias {
       return builder;
     }
     /**
-     * <pre>
-     * NUEVO: Mensaje para idiomas
-     * </pre>
-     *
      * Protobuf type {@code co.edu.unicauca.grpc.Idioma}
      */
     public static final class Builder extends
@@ -2517,10 +2509,16 @@ public final class Preferencias {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 idUsuario = 1;</code>
+     * <code>string idUsuario = 1;</code>
      * @return The idUsuario.
      */
-    int getIdUsuario();
+    java.lang.String getIdUsuario();
+    /**
+     * <code>string idUsuario = 1;</code>
+     * @return The bytes for idUsuario.
+     */
+    com.google.protobuf.ByteString
+        getIdUsuarioBytes();
 
     /**
      * <code>repeated .co.edu.unicauca.grpc.Genero preferenciasGeneros = 2;</code>
@@ -2571,44 +2569,24 @@ public final class Preferencias {
         int index);
 
     /**
-     * <pre>
-     * ← NUEVO CAMPO
-     * </pre>
-     *
      * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
      */
     java.util.List<co.edu.unicauca.grpc.Preferencias.Idioma> 
         getPreferenciasIdiomasList();
     /**
-     * <pre>
-     * ← NUEVO CAMPO
-     * </pre>
-     *
      * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
      */
     co.edu.unicauca.grpc.Preferencias.Idioma getPreferenciasIdiomas(int index);
     /**
-     * <pre>
-     * ← NUEVO CAMPO
-     * </pre>
-     *
      * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
      */
     int getPreferenciasIdiomasCount();
     /**
-     * <pre>
-     * ← NUEVO CAMPO
-     * </pre>
-     *
      * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
      */
     java.util.List<? extends co.edu.unicauca.grpc.Preferencias.IdiomaOrBuilder> 
         getPreferenciasIdiomasOrBuilderList();
     /**
-     * <pre>
-     * ← NUEVO CAMPO
-     * </pre>
-     *
      * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
      */
     co.edu.unicauca.grpc.Preferencias.IdiomaOrBuilder getPreferenciasIdiomasOrBuilder(
@@ -2627,6 +2605,7 @@ public final class Preferencias {
       super(builder);
     }
     private PreferenciaResponse() {
+      idUsuario_ = "";
       preferenciasGeneros_ = java.util.Collections.emptyList();
       preferenciasArtistas_ = java.util.Collections.emptyList();
       preferenciasIdiomas_ = java.util.Collections.emptyList();
@@ -2663,9 +2642,10 @@ public final class Preferencias {
             case 0:
               done = true;
               break;
-            case 8: {
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
 
-              idUsuario_ = input.readInt32();
+              idUsuario_ = s;
               break;
             }
             case 18: {
@@ -2739,14 +2719,41 @@ public final class Preferencias {
     }
 
     public static final int IDUSUARIO_FIELD_NUMBER = 1;
-    private int idUsuario_;
+    private volatile java.lang.Object idUsuario_;
     /**
-     * <code>int32 idUsuario = 1;</code>
+     * <code>string idUsuario = 1;</code>
      * @return The idUsuario.
      */
     @java.lang.Override
-    public int getIdUsuario() {
-      return idUsuario_;
+    public java.lang.String getIdUsuario() {
+      java.lang.Object ref = idUsuario_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        idUsuario_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string idUsuario = 1;</code>
+     * @return The bytes for idUsuario.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getIdUsuarioBytes() {
+      java.lang.Object ref = idUsuario_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        idUsuario_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     public static final int PREFERENCIASGENEROS_FIELD_NUMBER = 2;
@@ -2832,10 +2839,6 @@ public final class Preferencias {
     public static final int PREFERENCIASIDIOMAS_FIELD_NUMBER = 4;
     private java.util.List<co.edu.unicauca.grpc.Preferencias.Idioma> preferenciasIdiomas_;
     /**
-     * <pre>
-     * ← NUEVO CAMPO
-     * </pre>
-     *
      * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
      */
     @java.lang.Override
@@ -2843,10 +2846,6 @@ public final class Preferencias {
       return preferenciasIdiomas_;
     }
     /**
-     * <pre>
-     * ← NUEVO CAMPO
-     * </pre>
-     *
      * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
      */
     @java.lang.Override
@@ -2855,10 +2854,6 @@ public final class Preferencias {
       return preferenciasIdiomas_;
     }
     /**
-     * <pre>
-     * ← NUEVO CAMPO
-     * </pre>
-     *
      * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
      */
     @java.lang.Override
@@ -2866,10 +2861,6 @@ public final class Preferencias {
       return preferenciasIdiomas_.size();
     }
     /**
-     * <pre>
-     * ← NUEVO CAMPO
-     * </pre>
-     *
      * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
      */
     @java.lang.Override
@@ -2877,10 +2868,6 @@ public final class Preferencias {
       return preferenciasIdiomas_.get(index);
     }
     /**
-     * <pre>
-     * ← NUEVO CAMPO
-     * </pre>
-     *
      * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
      */
     @java.lang.Override
@@ -2903,8 +2890,8 @@ public final class Preferencias {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (idUsuario_ != 0) {
-        output.writeInt32(1, idUsuario_);
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(idUsuario_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, idUsuario_);
       }
       for (int i = 0; i < preferenciasGeneros_.size(); i++) {
         output.writeMessage(2, preferenciasGeneros_.get(i));
@@ -2924,9 +2911,8 @@ public final class Preferencias {
       if (size != -1) return size;
 
       size = 0;
-      if (idUsuario_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, idUsuario_);
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(idUsuario_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, idUsuario_);
       }
       for (int i = 0; i < preferenciasGeneros_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
@@ -2955,8 +2941,8 @@ public final class Preferencias {
       }
       co.edu.unicauca.grpc.Preferencias.PreferenciaResponse other = (co.edu.unicauca.grpc.Preferencias.PreferenciaResponse) obj;
 
-      if (getIdUsuario()
-          != other.getIdUsuario()) return false;
+      if (!getIdUsuario()
+          .equals(other.getIdUsuario())) return false;
       if (!getPreferenciasGenerosList()
           .equals(other.getPreferenciasGenerosList())) return false;
       if (!getPreferenciasArtistasList()
@@ -2975,7 +2961,7 @@ public final class Preferencias {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + IDUSUARIO_FIELD_NUMBER;
-      hash = (53 * hash) + getIdUsuario();
+      hash = (53 * hash) + getIdUsuario().hashCode();
       if (getPreferenciasGenerosCount() > 0) {
         hash = (37 * hash) + PREFERENCIASGENEROS_FIELD_NUMBER;
         hash = (53 * hash) + getPreferenciasGenerosList().hashCode();
@@ -3124,7 +3110,7 @@ public final class Preferencias {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        idUsuario_ = 0;
+        idUsuario_ = "";
 
         if (preferenciasGenerosBuilder_ == null) {
           preferenciasGeneros_ = java.util.Collections.emptyList();
@@ -3247,8 +3233,9 @@ public final class Preferencias {
 
       public Builder mergeFrom(co.edu.unicauca.grpc.Preferencias.PreferenciaResponse other) {
         if (other == co.edu.unicauca.grpc.Preferencias.PreferenciaResponse.getDefaultInstance()) return this;
-        if (other.getIdUsuario() != 0) {
-          setIdUsuario(other.getIdUsuario());
+        if (!other.getIdUsuario().isEmpty()) {
+          idUsuario_ = other.idUsuario_;
+          onChanged();
         }
         if (preferenciasGenerosBuilder_ == null) {
           if (!other.preferenciasGeneros_.isEmpty()) {
@@ -3358,33 +3345,78 @@ public final class Preferencias {
       }
       private int bitField0_;
 
-      private int idUsuario_ ;
+      private java.lang.Object idUsuario_ = "";
       /**
-       * <code>int32 idUsuario = 1;</code>
+       * <code>string idUsuario = 1;</code>
        * @return The idUsuario.
        */
-      @java.lang.Override
-      public int getIdUsuario() {
-        return idUsuario_;
+      public java.lang.String getIdUsuario() {
+        java.lang.Object ref = idUsuario_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          idUsuario_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
-       * <code>int32 idUsuario = 1;</code>
+       * <code>string idUsuario = 1;</code>
+       * @return The bytes for idUsuario.
+       */
+      public com.google.protobuf.ByteString
+          getIdUsuarioBytes() {
+        java.lang.Object ref = idUsuario_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          idUsuario_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string idUsuario = 1;</code>
        * @param value The idUsuario to set.
        * @return This builder for chaining.
        */
-      public Builder setIdUsuario(int value) {
-        
+      public Builder setIdUsuario(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
         idUsuario_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 idUsuario = 1;</code>
+       * <code>string idUsuario = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearIdUsuario() {
         
-        idUsuario_ = 0;
+        idUsuario_ = getDefaultInstance().getIdUsuario();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string idUsuario = 1;</code>
+       * @param value The bytes for idUsuario to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIdUsuarioBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        idUsuario_ = value;
         onChanged();
         return this;
       }
@@ -3882,10 +3914,6 @@ public final class Preferencias {
           co.edu.unicauca.grpc.Preferencias.Idioma, co.edu.unicauca.grpc.Preferencias.Idioma.Builder, co.edu.unicauca.grpc.Preferencias.IdiomaOrBuilder> preferenciasIdiomasBuilder_;
 
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public java.util.List<co.edu.unicauca.grpc.Preferencias.Idioma> getPreferenciasIdiomasList() {
@@ -3896,10 +3924,6 @@ public final class Preferencias {
         }
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public int getPreferenciasIdiomasCount() {
@@ -3910,10 +3934,6 @@ public final class Preferencias {
         }
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public co.edu.unicauca.grpc.Preferencias.Idioma getPreferenciasIdiomas(int index) {
@@ -3924,10 +3944,6 @@ public final class Preferencias {
         }
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public Builder setPreferenciasIdiomas(
@@ -3945,10 +3961,6 @@ public final class Preferencias {
         return this;
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public Builder setPreferenciasIdiomas(
@@ -3963,10 +3975,6 @@ public final class Preferencias {
         return this;
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public Builder addPreferenciasIdiomas(co.edu.unicauca.grpc.Preferencias.Idioma value) {
@@ -3983,10 +3991,6 @@ public final class Preferencias {
         return this;
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public Builder addPreferenciasIdiomas(
@@ -4004,10 +4008,6 @@ public final class Preferencias {
         return this;
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public Builder addPreferenciasIdiomas(
@@ -4022,10 +4022,6 @@ public final class Preferencias {
         return this;
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public Builder addPreferenciasIdiomas(
@@ -4040,10 +4036,6 @@ public final class Preferencias {
         return this;
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public Builder addAllPreferenciasIdiomas(
@@ -4059,10 +4051,6 @@ public final class Preferencias {
         return this;
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public Builder clearPreferenciasIdiomas() {
@@ -4076,10 +4064,6 @@ public final class Preferencias {
         return this;
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public Builder removePreferenciasIdiomas(int index) {
@@ -4093,10 +4077,6 @@ public final class Preferencias {
         return this;
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public co.edu.unicauca.grpc.Preferencias.Idioma.Builder getPreferenciasIdiomasBuilder(
@@ -4104,10 +4084,6 @@ public final class Preferencias {
         return getPreferenciasIdiomasFieldBuilder().getBuilder(index);
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public co.edu.unicauca.grpc.Preferencias.IdiomaOrBuilder getPreferenciasIdiomasOrBuilder(
@@ -4118,10 +4094,6 @@ public final class Preferencias {
         }
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public java.util.List<? extends co.edu.unicauca.grpc.Preferencias.IdiomaOrBuilder> 
@@ -4133,10 +4105,6 @@ public final class Preferencias {
         }
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public co.edu.unicauca.grpc.Preferencias.Idioma.Builder addPreferenciasIdiomasBuilder() {
@@ -4144,10 +4112,6 @@ public final class Preferencias {
             co.edu.unicauca.grpc.Preferencias.Idioma.getDefaultInstance());
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public co.edu.unicauca.grpc.Preferencias.Idioma.Builder addPreferenciasIdiomasBuilder(
@@ -4156,10 +4120,6 @@ public final class Preferencias {
             index, co.edu.unicauca.grpc.Preferencias.Idioma.getDefaultInstance());
       }
       /**
-       * <pre>
-       * ← NUEVO CAMPO
-       * </pre>
-       *
        * <code>repeated .co.edu.unicauca.grpc.Idioma preferenciasIdiomas = 4;</code>
        */
       public java.util.List<co.edu.unicauca.grpc.Preferencias.Idioma.Builder> 
@@ -4274,7 +4234,7 @@ public final class Preferencias {
       "\n\rnombreArtista\030\001 \001(\t\022\032\n\022numeroPreferenc" +
       "ias\030\002 \001(\005\":\n\006Idioma\022\024\n\014nombreIdioma\030\001 \001(" +
       "\t\022\032\n\022numeroPreferencias\030\002 \001(\005\"\333\001\n\023Prefer" +
-      "enciaResponse\022\021\n\tidUsuario\030\001 \001(\005\0229\n\023pref" +
+      "enciaResponse\022\021\n\tidUsuario\030\001 \001(\t\0229\n\023pref" +
       "erenciasGeneros\030\002 \003(\0132\034.co.edu.unicauca." +
       "grpc.Genero\022;\n\024preferenciasArtistas\030\003 \003(" +
       "\0132\035.co.edu.unicauca.grpc.Artista\0229\n\023pref" +

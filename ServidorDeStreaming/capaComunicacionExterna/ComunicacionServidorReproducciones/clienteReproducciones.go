@@ -1,4 +1,4 @@
-package comunicacionservidorpreferencias
+package comunicacionservidorreproducciones
 
 import (
 	"bytes"
@@ -18,8 +18,8 @@ type ReproduccionDTOInput struct {
 }
 
 // Función que envía una reproducción al microservicio de tendencias
-func RegistrarReproduccionEnTendencias(usuario, genero, artista, titulo, cliente, idioma string) error {
-	url := "http://localhost:5000/tendencias/reproduccion" // endpoint del microservicio de tendencias
+func RegistrarReproduccion(usuario, genero, artista, titulo, cliente, idioma string) error {
+	url := "http://localhost:5000/playback/reproduccion" // endpoint del microservicio de tendencias
 
 	// Crear el cuerpo JSON
 	body := ReproduccionDTOInput{
@@ -28,7 +28,7 @@ func RegistrarReproduccionEnTendencias(usuario, genero, artista, titulo, cliente
 		Artista: artista,
 		Titulo:  titulo,
 		Cliente: cliente,
-		Idioma:  idioma, // ← ASIGNAR IDIOMA
+		Idioma:  idioma,
 	}
 
 	jsonData, err := json.Marshal(body)
@@ -44,9 +44,9 @@ func RegistrarReproduccionEnTendencias(usuario, genero, artista, titulo, cliente
 
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusCreated {
-		return fmt.Errorf("el servicio de tendencias respondió con código %d", resp.StatusCode)
+		return fmt.Errorf("el servidor de reproducciones respondió con código %d", resp.StatusCode)
 	}
 
-	fmt.Println("Reproducción registrada en el microservicio de tendencias:", titulo)
+	//fmt.Printf("# Reproducción de '%s' registrada para '%s'.\n", titulo, usuario)
 	return nil
 }

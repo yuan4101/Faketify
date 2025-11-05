@@ -1,4 +1,4 @@
-package models
+package dto
 
 type ResponseAllGenresDTO struct {
 	GENRES_ARR []Genre

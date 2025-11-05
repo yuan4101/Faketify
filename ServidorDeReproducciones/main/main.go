@@ -2,18 +2,19 @@ package main
 
 import (
 	"fmt"
+	controlador "localServer/grpc-playbackServer/capaControladores"
 	"net/http"
-	controlador "tendencias/capaControladores"
 )
 
 func main() {
-	ctrl := controlador.NuevoControladorTendencias()
+	ctrl := controlador.NuevoControladorReproducciones()
 
-	http.HandleFunc("/tendencias/reproduccion", ctrl.RegistrarReproduccionHandler)
-	http.HandleFunc("/tendencias/listarReproducciones", ctrl.ListarReproduccionesHandler)
+	http.HandleFunc("/playback/reproduccion", ctrl.RegistrarReproduccionHandler)
+	http.HandleFunc("/playback/listarReproducciones", ctrl.ListarReproduccionesHandler)
 
-	fmt.Println("Servicio de Tendencias escuchando en el puerto 5000...")
-	if err := http.ListenAndServe(":5000", nil); err != nil {
+	puerto := ":5000"
+	fmt.Printf("\n\t\t----- SERVIDOR DE REPRODUCCIONES (Go/REST) [%s] -----\n", puerto)
+	if err := http.ListenAndServe(puerto, nil); err != nil {
 		fmt.Println("Error iniciando el servidor", err)
 	}
 }

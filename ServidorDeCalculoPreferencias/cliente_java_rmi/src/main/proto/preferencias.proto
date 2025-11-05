@@ -20,15 +20,14 @@ message Artista {
   int32 numeroPreferencias = 2;
 }
 
-// NUEVO: Mensaje para idiomas
 message Idioma {
   string nombreIdioma = 1;
   int32 numeroPreferencias = 2;
 }
 
 message PreferenciaResponse {
-  int32 idUsuario = 1;
+  string idUsuario = 1;
   repeated Genero preferenciasGeneros = 2;
   repeated Artista preferenciasArtistas = 3;
-  repeated Idioma preferenciasIdiomas = 4;  // ← NUEVO CAMPO
+  repeated Idioma preferenciasIdiomas = 4;
 }

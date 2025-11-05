@@ -6,8 +6,6 @@ import co.edu.unicauca.configuracion.servicios.ServidorDeObjetos;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("\n===== INICIANDO SERVIDOR DE CÁLCULO DE PREFERENCIAS =====\n");
-        
         int puertoNS = Integer.parseInt(LectorPropiedadesConfig.get("ns.port"));
         String direccionIPNS = LectorPropiedadesConfig.get("ns.host");
 
@@ -16,8 +14,7 @@ public class Main {
         String identificadorObjetoRemoto = "objControladorPreferenciasUsuarios";
         ServidorDeObjetos.registrarObjetoRemoto(objControladorPreferencias, direccionIPNS, puertoNS, identificadorObjetoRemoto);
         
-        System.out.println("✓ Servidor RMI escuchando en " + direccionIPNS + ":" + puertoNS);
-        System.out.println("✓ Objeto remoto registrado como: " + identificadorObjetoRemoto);
-        System.out.println("\n===== SERVIDOR LISTO PARA RECIBIR CONEXIONES =====\n");
+        System.out.printf("\n\t\t----- SERVIDOR CALCULO DE PREFERENCIAS (Java RMI) [%s:%s] -----\n",direccionIPNS, puertoNS);
+        System.out.println("-> Objeto remoto registrado como: " + identificadorObjetoRemoto);
     }
 }

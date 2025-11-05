@@ -1,6 +1,6 @@
 package co.edu.unicauca.fachadaServices.services.componenteComunicacionServidorReproducciones;
 
-import co.edu.unicauca.fachadaServices.DTO.ReproduccionesRealesDTOEntrada;
+import co.edu.unicauca.fachadaServices.DTO.ReproduccionesDTOEntrada;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import java.util.ArrayList;
@@ -16,9 +16,9 @@ public class ComunicacionServidorReproducciones {
                 .target(ReproduccionesRemoteClient.class, BASE_URL);
     }
 
-    public List<ReproduccionesRealesDTOEntrada> obtenerReproduccionesRemotas() {
+    public List<ReproduccionesDTOEntrada> obtenerReproduccionesRemotas() {
         try {
-            List<ReproduccionesRealesDTOEntrada> reproducciones = client.obtenerReproducciones();
+            List<ReproduccionesDTOEntrada> reproducciones = client.obtenerReproducciones();
             return reproducciones != null ? reproducciones : new ArrayList<>();
         } catch (Exception e) {
             System.err.println("Error al obtener reproducciones: " + e.getMessage());
